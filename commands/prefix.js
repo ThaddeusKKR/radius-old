@@ -8,9 +8,17 @@ module.exports = {
     aliases: [],
     modOnly: true,
     async execute(message, args) {
+        const db = new Keyv(process.env.DATABASE_URL)
+        db.on('error', err => {
+            console.log(`Connection error (Keyv): ${err}`)
+            const embed = new MessageEmbed()
+                .setDescription(`Failed to connect to the Keyv database.`)
+                .setColor("RED")
+            return message.channel.send(embed)
+        })
         if (!args.length) {
             const embed = new MessageEmbed()
-                .setDescription(`The current prefix for this server is \`${await prefixes.get(message.guild.id) || globalPrefix}\``)
+                .setDescription(`The current prefix for this server is \`${await db.get(message.guild.id) || globalPrefix}\``)
                 .setColor("PURPLE")
             return message.channel.send(embed)
         } else if (args.length > 1) {
@@ -25,14 +33,6 @@ module.exports = {
                 .setColor("RED")
             return message.channel.send(embed)
         }
-        const db = new Keyv(process.env.DATABASE_URL)
-        db.on('error', err => {
-            console.log(`Connection error (Keyv): ${err}`)
-            const embed = new MessageEmbed()
-                .setDescription(`Failed to connect to the Keyv database.`)
-                .setColor("RED")
-            return message.channel.send(embed)
-        })
         db.set(message.guild.id, args[0])
         const embed = new MessageEmbed()
             .setDescription(`Successfully set the server prefix to \`${args[0]}\``)
