@@ -21,7 +21,7 @@ keyv.on('error', err => {
     console.log(`Connection error (Keyv): ${err}`)
 })
 
-client.on('message', message => {
+client.on('message', async message => {
 
     // Keyv Data Storage ( Using this for prefix and stuff )
 
