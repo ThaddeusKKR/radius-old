@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const { globalPrefix } = require('../config.json')
+const Keyv = require('keyv')
 
 module.exports = {
     name: 'userinfo',
