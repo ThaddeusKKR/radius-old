@@ -4,6 +4,7 @@ const fs = require('fs')
 const { globalPrefix, unknownCmd, ownerID } = require('./config.json')
 const config = require('./config.json')
 const Keyv = require('keyv')
+const DBL = require('dblapi.js')
 
 const client = new Client()
 client.commands = new Collection()
@@ -108,6 +109,17 @@ client.on('message', async message => {
             embeds: [errEmb]
         })
     }
+})
+
+const dbl = new DBL(process.env.DBLTOKEN, client);
+
+// Optional events
+dbl.on('posted', () => {
+    console.log('Server count posted!');
+})
+
+dbl.on('error', e => {
+    console.log(`Oops! ${e}`);
 })
 
 client.once('ready', async () => {
