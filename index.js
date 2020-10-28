@@ -26,7 +26,7 @@ client.on('message', async message => {
     // Keyv Data Storage ( Using this for prefix and stuff )
 
     let prefix
-    if (message.content.startsWith(globalPrefix || !db.get(message.guild.id))) {
+    if (message.content.startsWith(globalPrefix && !db.get(message.guild.id))) {
         prefix = globalPrefix
     } else if (message.content.startsWith(message.client.user.toString())) { // If starts with mention
         prefix = message.client.user.toString()
