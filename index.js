@@ -55,7 +55,7 @@ client.on('message', async message => {
     const webhookClient2 = new WebhookClient(process.env.WH2ID, process.env.WH2TOKEN)
 
     if (command.modOnly == true) {
-        if (!message.member.roles.cache.find(r => r.name === "Admin" || r.name === "Owner" || r.name === "Admin Bots") || !message.member.hasPermission('ADMINISTRATOR') || message.author.id != ownerID) {
+        if (message.author.id != ownerID || message.member.hasPermission('ADMINISTRATOR') == false) {
             const embed = new MessageEmbed()
                 .setDescription("You are not allowed to use this command.")
                 .setColor("RED")
@@ -111,7 +111,7 @@ client.on('message', async message => {
 })
 
 client.once('ready', async () => {
-    await client.user.setActivity(".help | 1.0.0", {
+    await client.user.setActivity("raven help", {
         type: "STREAMING",
         url: "https://twitch.tv/thaddeuskkr",
         status: "dnd"
