@@ -1,0 +1,29 @@
+{
+  "name": "ravenbot",
+  "version": "1.0.0",
+  "description": "A Discord bot for a personal server, to do some moderation and other stuff.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThaddeusKKR/raven.git"
+  },
+  "keywords": [
+    "discordbot",
+    "bot",
+    "javascript"
+  ],
+  "author": "Thaddeus Kuah",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ThaddeusKKR/raven/issues"
+  },
+  "homepage": "https://github.com/ThaddeusKKR/raven#readme",
+  "dependencies": {
+    "@keyv/postgres": "^1.0.16",
+    "discord.js": "^12.4.1",
+    "keyv": "^4.0.3"
+  }
+}

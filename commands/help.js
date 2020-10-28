@@ -1,0 +1,68 @@
+const { prefix } = require('../config.json');
+const { MessageEmbed } = require('discord.js')
+
+module.exports = {
+    name: 'help',
+    description: 'Sends you this help command.',
+    aliases: ['h', 'commands'],
+    category: 'info',
+    async execute(message, args) {
+
+        const { commands } = message.client;
+
+        const commandList = commands.map(command => command.name).join('\`, \`')
+
+        if (!args.length) {
+            const embed = new MessageEmbed()
+                .setTitle("Help")
+                .setDescription(`This is a list of all my commands.\nYou can run \`${prefix}help [command name]\` to get more information on a command.`)
+                .addField("Commands", `\`${commandList}\``)
+                .setColor("PURPLE")
+                .setFooter(`Requested by ${message.author.tag}`)
+                .setTimestamp()
+            message.channel.send(embed)
+            return;
+        }
+
+        const name = args[0].toLowerCase();
+        const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
+
+        if (!command) {
+            const errEmbed = new MessageEmbed()
+                .setDescription("That's not a valid command!")
+                .setColor("RED")
+            return message.channel.send(errEmbed)
+        }
+
+        let limitations = ''
+
+        if (command.ownerOnly == true) {
+            limitations = "This command is only available for the owner of the bot."
+        } else if (command.modOnly == true) {
+            limitations = "This command is only available for the adminstrator of this server."
+        } else if (!command.ownerOnly && !command.modOnly) {
+            limitations = "None"
+        } else {
+            limitations = "None"
+        }
+
+        let aliases;
+
+        if (!command.aliases || command.aliases.length < 1) {
+            aliases = "None"
+        } else {
+            aliases = `\`${command.aliases.join('`, `')}\``
+        }
+
+        const embed = new MessageEmbed()
+            .setTitle("Command Information")
+            .setDescription(`Specific information on the \`${command.name}\` command.\nTo get a full list of commands, just use \`${prefix}help\`.`)
+            .addField(`Name`, `\`${command.name}\``)
+            .addField(`Aliases`, aliases)
+            .addField(`Description`, command.description)
+            .addField(`Limitations`, limitations)
+            .setColor("PURPLE")
+
+        message.channel.send(embed)
+    }
+}
