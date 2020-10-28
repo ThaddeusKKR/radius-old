@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const { maxPrefixLength } = require('../config.json')
+const { maxPrefixLength, globalPrefix } = require('../config.json')
 const Keyv = require('keyv')
 
 module.exports = {
