@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const { maxPrefixLength } = require('../config.json')
-const keyv = require('keyv')
+const Keyv = require('keyv')
 
 module.exports = {
     name: 'prefix',
@@ -26,7 +26,7 @@ module.exports = {
             return message.channel.send(embed)
         }
         const db = new Keyv(process.env.DATABASE_URL)
-        keyv.on('error', err => {
+        db.on('error', err => {
             console.log(`Connection error (Keyv): ${err}`)
             const embed = new MessageEmbed()
                 .setDescription(`Failed to connect to the Keyv database.`)

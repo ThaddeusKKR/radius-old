@@ -17,7 +17,7 @@ for (const file of commandFiles) {
 }
 
 const db = new Keyv(process.env.DATABASE_URL)
-keyv.on('error', err => {
+db.on('error', err => {
     console.log(`Connection error (Keyv): ${err}`)
 })
 
