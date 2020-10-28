@@ -1,6 +1,6 @@
 {
   "ownerID": "275830234262142978",
   "globalPrefix": "raven",
-  "unknownCmd": true,
+  "unknownCmd": false,
   "maxPrefixLength": 12
 }
