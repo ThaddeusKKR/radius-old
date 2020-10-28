@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const { prefix } = require('../config.json')
+const { globalPrefix } = require('../config.json')
 
 module.exports = {
     name: 'poll',
@@ -7,6 +7,17 @@ module.exports = {
     aliases: ['vote'],
     category: 'tools',
     async execute(message, args) {
+
+        const db = new Keyv(process.env.DATABASE_URL)
+        db.on('error', err => {
+            console.log(`Connection error (Keyv): ${err}`)
+            const embed = new MessageEmbed()
+                .setDescription(`Failed to connect to the Keyv database.`)
+                .setColor("RED")
+            return message.channel.send(embed)
+        })
+        const prefix = await db.get(message.guild.id) || globalPrefix
+
         message.delete()
         if (!args.length) {
             const embed = new MessageEmbed()

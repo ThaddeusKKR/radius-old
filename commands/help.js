@@ -1,5 +1,6 @@
-const { prefix } = require('../config.json');
+const { globalPrefix } = require('../config.json');
 const { MessageEmbed } = require('discord.js')
+const Keyv = require('keyv')
 
 module.exports = {
     name: 'help',
@@ -12,10 +13,20 @@ module.exports = {
 
         const commandList = commands.map(command => command.name).join('\`, \`')
 
+        const db = new Keyv(process.env.DATABASE_URL)
+        db.on('error', err => {
+            console.log(`Connection error (Keyv): ${err}`)
+            const embed = new MessageEmbed()
+                .setDescription(`Failed to connect to the Keyv database.`)
+                .setColor("RED")
+            return message.channel.send(embed)
+        })
+        const prefix = await db.get(message.guild.id) || globalPrefix
+
         if (!args.length) {
             const embed = new MessageEmbed()
                 .setTitle("Help")
-                .setDescription(`This is a list of all my commands.\nYou can run \`${prefix}help [command name]\` to get more information on a command.`)
+                .setDescription(`This is a list of all my commands.\nYou can run \`${await db.get(message.guild.id) || globalPrefix}help [command name]\` to get more information on a command.`)
                 .addField("Commands", `\`${commandList}\``)
                 .setColor("PURPLE")
                 .setFooter(`Requested by ${message.author.tag}`)
@@ -56,7 +67,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setTitle("Command Information")
-            .setDescription(`Specific information on the \`${command.name}\` command.\nTo get a full list of commands, just use \`${prefix}help\`.`)
+            .setDescription(`Specific information on the \`${command.name}\` command.\nTo get a full list of commands, just use \`${await db.get(message.guild.id) || globalPrefix}help\`.`)
             .addField(`Name`, `\`${command.name}\``)
             .addField(`Aliases`, aliases)
             .addField(`Description`, command.description)

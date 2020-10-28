@@ -1,4 +1,4 @@
-const { ownerID, prefix } = require('../config.json')
+const { ownerID, globalPrefix } = require('../config.json')
 const { MessageEmbed } = require('discord.js')
 
 module.exports = {

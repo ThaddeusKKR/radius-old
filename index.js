@@ -26,7 +26,7 @@ client.on('message', async message => {
     // Keyv Data Storage ( Using this for prefix and stuff )
 
     let prefix
-    if (message.content.startsWith(globalPrefix)) {
+    if (message.content.startsWith(globalPrefix || !db.get(message.guild.id))) {
         prefix = globalPrefix
     } else if (message.content.startsWith(message.client.user.toString())) { // If starts with mention
         prefix = message.client.user.toString()
@@ -45,7 +45,7 @@ client.on('message', async message => {
     if (!command) {
         if (unknownCmd == true) { // Config.json
             const noEmb = new MessageEmbed()
-                .setDescription(`Unknown command | Do \`${prefix}help\` for a full list of commands`)
+                .setDescription(`Unknown command | Do \`${db.get(message.guild.id) || globalPrefix}help\` for a full list of commands`)
                 .setColor("RED")
             message.channel.send(noEmb)
         }

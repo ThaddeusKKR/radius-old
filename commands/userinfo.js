@@ -1,11 +1,22 @@
 const { MessageEmbed } = require('discord.js')
-const { prefix } = require('../config.json')
+const { globalPrefix } = require('../config.json')
 
 module.exports = {
     name: 'userinfo',
     description: 'Shows you information about a user (Mention).',
     aliases: ['ui', 'user'],
     async execute(message, args) {
+
+        const db = new Keyv(process.env.DATABASE_URL)
+        db.on('error', err => {
+            console.log(`Connection error (Keyv): ${err}`)
+            const embed = new MessageEmbed()
+                .setDescription(`Failed to connect to the Keyv database.`)
+                .setColor("RED")
+            return message.channel.send(embed)
+        })
+        const prefix = await db.get(message.guild.id) || globalPrefix
+
         let usr = message.mentions.users.first()
         if (!usr) usr = message.member.user
         if (!usr) {
