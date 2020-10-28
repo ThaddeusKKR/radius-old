@@ -23,11 +23,16 @@ module.exports = {
             return message.channel.send(embed)
         } else if (args.length > 1) {
             const embed = new MessageEmbed()
-                .setDescription(`You may only provide one argument`)
+                .setDescription(`You may only provide one argument.`)
+                .setColor("RED")
+            return message.channel.send(embed)
+        } else if (args.join(' ').includes('-default')) {
+            db.set(message.guild.id, globalPrefix)
+            const embed = new MessageEmbed()
+                .setDescription(`Set the server prefix to the default prefix (currently \`${globalPrefix}\`)`)
                 .setColor("PURPLE")
             return message.channel.send(embed)
-        }
-        if (args[0].length > maxPrefixLength) {
+        } else if (args[0].length > maxPrefixLength) {
             const embed = new MessageEmbed()
                 .setDescription(`The prefix cannot be more than ${maxPrefixLength} characters.`)
                 .setColor("RED")

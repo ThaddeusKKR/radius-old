@@ -28,10 +28,9 @@ client.on('message', async message => {
     let prefix
     if (message.content.startsWith(globalPrefix && !db.get(message.guild.id))) {
         prefix = globalPrefix
-    } else if (message.content.startsWith(message.client.user.toString())) { // If starts with mention
-        prefix = message.client.user.toString()
     } else {
         const guildPrefix = await db.get(message.guild.id); // Get prefix for the guild
+        if (!guildPrefix) prefix = globalPrefix
         if (message.content.startsWith(guildPrefix)) prefix = guildPrefix
     }
     if (!prefix || message.author.bot) {
