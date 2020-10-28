@@ -17,7 +17,7 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command)
 }
 
-const db = new Keyv(process.env.DATABASE_URL)
+const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
 db.on('error', err => {
     console.log(`Connection error (Keyv): ${err}`)
 })

@@ -13,7 +13,7 @@ module.exports = {
 
         const commandList = commands.map(command => command.name).join('\`, \`')
 
-        const db = new Keyv(process.env.DATABASE_URL)
+        const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
         db.on('error', err => {
             console.log(`Connection error (Keyv): ${err}`)
             const embed = new MessageEmbed()
