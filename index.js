@@ -56,7 +56,7 @@ client.on('message', message => {
     const webhookClient2 = new WebhookClient(process.env.WH2ID, process.env.WH2TOKEN)
 
     if (command.modOnly == true) {
-        if (!message.member.roles.cache.find(r => r.name === "Admin" || r.name === "Owner" || r.name === "Admin Bots") || !message.member.hasPermission('ADMINISTRATOR')) {
+        if (!message.member.roles.cache.find(r => r.name === "Admin" || r.name === "Owner" || r.name === "Admin Bots") || !message.member.hasPermission('ADMINISTRATOR') || message.author.id != ownerID) {
             const embed = new MessageEmbed()
                 .setDescription("You are not allowed to use this command.")
                 .setColor("RED")
