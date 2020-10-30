@@ -33,15 +33,18 @@ module.exports = {
                 if (error) {
                     embed.setDescription(`Failed to run this command.\n\`\`\`\n${error.message}\n\`\`\``)
                     embed.setColor("RED")
+                    console.log(`Output: ${error}`)
                     return msg.edit(embed)
                 }
                 if (getter) {
                     embed.setDescription(`**Output:** \`${getter}\``)
                     embed.setColor("GREEN")
+                    console.log(`Output: ${getter}`)
                     return msg.edit(embed)
                 }
                 embed.setDescription(`**Output:** \`${data}\``)
                 embed.setColor("GREEN")
+                console.log(`Output: ${data}`)
                 return msg.edit(embed)
             })
         }
