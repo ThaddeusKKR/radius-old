@@ -19,22 +19,17 @@ module.exports = {
         const prefix = await db.get(message.guild.id) || globalPrefix
 
         let usr = message.guild.members.cache.get(args[0]) || message.mentions.users.first()
+
         if (!usr) {
             usr = message.member.user
-        } else {
-            const emb = new MessageEmbed()
-                .setDescription("I can't find your information.")
-                .setColor("RED")
-            message.channel.send(emb)
-            return;
         }
-        const mbr = message.guild.members.cache.find(member => member.user.id === usr.id)
-        if (!mbr) {
+
+        const mbr = message.guild.members.cache.find(member => member.user.id === usr.id).catch(err => {
             const emb = new MessageEmbed()
                 .setDescription(`Could not find information for user ${args[0]}`)
                 .setColor("RED")
             return message.channel.send(emb)
-        }
+        })
         let pres
         let hasPres = false
         if (mbr.presence.activities.length != 0) hasPres = true
