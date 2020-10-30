@@ -19,7 +19,11 @@ module.exports = {
         const prefix = await db.get(message.guild.id) || globalPrefix
 
         let usr = message.mentions.users.first()
-        if (!usr) usr = message.member.user
+        if (!usr) {
+            usr = message.guild.members.cache.get(args[0])
+        } else {
+            usr = message.member.user
+        }
         if (!usr) {
             const emb = new MessageEmbed()
                 .setDescription("I can't find your information.")
