@@ -32,17 +32,31 @@ module.exports = {
             const embed = new MessageEmbed()
             exec(args.join(' '), (error, data, getter) => {
                 if (error) {
-                    embed.setDescription(`\`\`\`\n${error.message}\n\`\`\``)
+                    const haste = await hastebin(error, { extension: "txt" })
+                    if (error.message.length > 2000) {
+                        embed.setDescription(`Output is too long (${error.message.length} characters)\n${haste}`)
+                        embed.setColor("RED")
+                        return msg.edit(embed)
+                    }
+                    embed.setDescription(`\`\`\`\n${error.message}\n\`\`\`\n${haste}`)
                     embed.setColor("RED")
                     console.log(`${error}`)
                     return msg.edit(embed)
                 }
+                let result;
                 if (getter) {
-                    const result = getter
+                    result = getter
+                } else {
+                    result = data
                 }
-                const result = data
                 console.log(result)
-                embed.setDescription(`\`\`\`\n${result}\n\`\`\``)
+                const haste = await hastebin(result, { extension: "txt" })
+                if (result.length > 2040) {
+                    embed.setDescription(`Output is too long (${result.length} characters)\n${haste}`)
+                    embed.setColor("RED")
+                    return msg.edit(embed)
+                }
+                embed.setDescription(`\`\`\`\n${result}\n\`\`\`\n${haste}`)
                 embed.setColor("GREEN")
                 return msg.edit(embed)
             })
