@@ -21,8 +21,7 @@ module.exports = {
         let usr = message.mentions.users.first()
         if (!usr) {
             usr = message.guild.members.cache.get(args[0])
-        }
-        if (!usr) {
+        } else if (!usr) {
             usr = message.member.user
         } else {
             const emb = new MessageEmbed()
