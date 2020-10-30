@@ -37,12 +37,12 @@ module.exports = {
                     return msg.edit(embed)
                 }
                 if (getter) {
-                    embed.setDescription(`**Output:** \`${getter}\``)
+                    embed.setDescription(`**Output:**\n\`\`\`\n${getter}\n\`\`\``)
                     embed.setColor("GREEN")
                     console.log(`Output: ${getter}`)
                     return msg.edit(embed)
                 }
-                embed.setDescription(`**Output:** \`${data}\``)
+                embed.setDescription(`**Output:**\n\`\`\`\n${data}\n\`\`\``)
                 embed.setColor("GREEN")
                 console.log(`Output: ${data}`)
                 return msg.edit(embed)
