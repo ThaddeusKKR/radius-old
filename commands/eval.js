@@ -17,14 +17,12 @@ module.exports = {
         }
 
         let tOutput = true
-        let cp = false
 
         if (args[0] === '-noOutput' || args[0] === '-no' || args[0] === '-nooutput') {
             args.shift()
             tOutput = false
         }
         if (args[0] === '-exec' || args[0] === '-execute' || args[0] === '-cmd') {
-            cp = true
             args.shift()
             const loadingEmbed = new MessageEmbed()
                 .setDescription("Running command...")
