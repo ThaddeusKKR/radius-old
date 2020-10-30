@@ -1,6 +1,7 @@
 const { ownerID, globalPrefix } = require('../config.json')
 const { MessageEmbed } = require('discord.js')
-const { exec } = require("child_process");
+const { exec } = require("child_process")
+const hastebin = require('hastebin-gen')
 
 module.exports = {
     name: 'eval',
@@ -33,18 +34,16 @@ module.exports = {
                 if (error) {
                     embed.setDescription(`\`\`\`\n${error.message}\n\`\`\``)
                     embed.setColor("RED")
-                    console.log(`Output: ${error}`)
+                    console.log(`${error}`)
                     return msg.edit(embed)
                 }
                 if (getter) {
-                    embed.setDescription(`\`\`\`\n${getter}\n\`\`\``)
-                    embed.setColor("GREEN")
-                    console.log(`Output: ${getter}`)
-                    return msg.edit(embed)
+                    const result = getter
                 }
-                embed.setDescription(`\`\`\`\n${data}\n\`\`\``)
+                const result = data
+                console.log(result)
+                embed.setDescription(`\`\`\`\n${result}\n\`\`\``)
                 embed.setColor("GREEN")
-                console.log(`Output: ${data}`)
                 return msg.edit(embed)
             })
             return;
