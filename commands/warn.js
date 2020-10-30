@@ -20,10 +20,10 @@ module.exports = {
             return message.channel.send(embed)
         }
 
-        const loading = new MessageEmbed()
+        const loadingEmb = new MessageEmbed()
             .setColor("RED")
             .setDescription("Loading...")
-        let loading = await message.channel.send(loading)
+        let loading = await message.channel.send(loadingEmb)
 
         const memberMsg = message.mentions.users.first()
         const mbr = message.guild.members.cache.find(m => m.user.id === memberMsg.id)
