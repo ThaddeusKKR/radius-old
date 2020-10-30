@@ -17,6 +17,7 @@ module.exports = {
                 "+ added a prefix command\n" +
                 "- removed global prefix after setting server prefix\n" +
                 "+ added this changelog\n" +
+                "+ made it such that userinfo works with user ids as a argument\n" +
                 "```")
             .setFooter(`Requested by ${message.author.tag}`)
             .setTimestamp()

@@ -24,12 +24,13 @@ module.exports = {
             usr = message.member.user
         }
 
-        const mbr = message.guild.members.cache.find(member => member.user.id === usr.id).catch(err => {
+        const mbr = message.guild.members.cache.find(member => member.user.id === usr.id)
+        if (!mbr) {
             const emb = new MessageEmbed()
                 .setDescription(`Could not find information for user ${args[0]}`)
                 .setColor("RED")
             return message.channel.send(emb)
-        })
+        }
         let pres
         let hasPres = false
         if (mbr.presence.activities.length != 0) hasPres = true
