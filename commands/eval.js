@@ -1,5 +1,6 @@
 const { ownerID, globalPrefix } = require('../config.json')
 const { MessageEmbed } = require('discord.js')
+const { exec } = require("child_process");
 
 module.exports = {
     name: 'eval',
@@ -20,6 +21,29 @@ module.exports = {
         if (args[0] === '-noOutput' || args[0] === '-no' || args[0] === '-nooutput') {
             args.shift()
             tOutput = false
+        }
+        if (args[0] === '-exec' || args[0] === '-execute' || args[0] === '-cmd') {
+            args.shift()
+            const loadingEmbed = new MessageEmbed()
+                .setDescription("Running command...")
+                .setColor("RED")
+            let msg = await message.channel.send(loadingEmbed)
+            const embed = new MessageEmbed()
+            exec(args.join(' '), (error, data, getter) => {
+                if (error) {
+                    embed.setDescription(`Failed to run this command.\n\`\`\`\n${error.message}\n\`\`\``)
+                    embed.setColor("RED")
+                    return msg.edit(embed)
+                }
+                if (getter) {
+                    embed.setDescription(`**Output:** \`${getter}\``)
+                    embed.setColor("GREEN")
+                    return msg.edit(embed)
+                }
+                embed.setDescription(`**Output:** \`${data}\``)
+                embed.setColor("GREEN")
+                return msg.edit(embed)
+            })
         }
 
         try {
