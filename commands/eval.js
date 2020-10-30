@@ -30,7 +30,7 @@ module.exports = {
                 .setColor("RED")
             let msg = await message.channel.send(loadingEmbed)
             const embed = new MessageEmbed()
-            exec(args.join(' '), (error, data, getter) => {
+            exec(args.join(' '), async (error, data, getter) => {
                 if (error) {
                     const haste = await hastebin(error, { extension: "txt" })
                     if (error.message.length > 2000) {
