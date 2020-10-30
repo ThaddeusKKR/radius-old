@@ -25,6 +25,14 @@ db.on('error', err => {
 client.on('message', async message => {
 
     // Keyv Data Storage ( Using this for prefix and stuff )
+    if (message.content.split(' ').length === 1 && message.mentions.users.has(client.user)) {
+        let prefixForMention = await db.get(message.guild.id)
+        const embed = new MessageEmbed()
+            .setDescription(`My prefix in this server is \`${prefixForMention}\`.`)
+            .setFooter(`Do ${prefixForMention}help for a list of commands.`)
+            .setColor("PURPLE")
+        return message.channel.send(embed)
+    }
 
     let prefix
     if (message.content.startsWith(globalPrefix && !db.get(message.guild.id))) {
