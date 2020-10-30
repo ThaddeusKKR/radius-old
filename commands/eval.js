@@ -17,12 +17,14 @@ module.exports = {
         }
 
         let tOutput = true
+        let cp = false
 
         if (args[0] === '-noOutput' || args[0] === '-no' || args[0] === '-nooutput') {
             args.shift()
             tOutput = false
         }
         if (args[0] === '-exec' || args[0] === '-execute' || args[0] === '-cmd') {
+            cp = true
             args.shift()
             const loadingEmbed = new MessageEmbed()
                 .setDescription("Running command...")
@@ -48,54 +50,55 @@ module.exports = {
                 return msg.edit(embed)
             })
         }
+        if (cp = false) {
+            try {
+                const code = args.join(" ")
+                let evaled = eval(code)
 
-        try {
-            const code = args.join(" ")
-            let evaled = eval(code)
-
-            if (typeof evaled !== 'string') {
-                evaled = require("util").inspect(evaled);
-            }
-            if (tOutput == true) {
+                if (typeof evaled !== 'string') {
+                    evaled = require("util").inspect(evaled);
+                }
+                if (tOutput == true) {
+                    const embed = new MessageEmbed()
+                        .setTitle("Eval")
+                        .setDescription("Code successfully evaluated.")
+                        .addField("Input", `\`\`\`js\n${args.join(' ')}\n\`\`\``)
+                        .addField("Output", `\`\`\`js\n${clean(evaled)}\n\`\`\``)
+                        .setFooter(`Processing...`)
+                        .setTimestamp()
+                        .setColor("RED")
+                    const msg = await message.channel.send(embed)
+                    const embedEd = new MessageEmbed()
+                        .setTitle("Eval")
+                        .setDescription("Code successfully evaluated.")
+                        .addField("Input", `\`\`\`js\n${args.join(' ')}\n\`\`\``)
+                        .addField("Output", `\`\`\`js\n${clean(evaled)}\n\`\`\``)
+                        .setFooter(`Executed in ${msg.createdAt - message.createdAt}ms (Does not account for ping)`)
+                        .setTimestamp()
+                        .setColor("GREEN")
+                    msg.edit(embedEd)
+                }
+            } catch (err) {
                 const embed = new MessageEmbed()
-                    .setTitle("Eval")
-                    .setDescription("Code successfully evaluated.")
+                    .setTitle("Error")
+                    .setDescription("Error while evaluating code.")
                     .addField("Input", `\`\`\`js\n${args.join(' ')}\n\`\`\``)
-                    .addField("Output", `\`\`\`js\n${clean(evaled)}\n\`\`\``)
+                    .addField("Output", `\`\`\`js\n${clean(err)}\n\`\`\``)
                     .setFooter(`Processing...`)
                     .setTimestamp()
                     .setColor("RED")
                 const msg = await message.channel.send(embed)
                 const embedEd = new MessageEmbed()
-                    .setTitle("Eval")
-                    .setDescription("Code successfully evaluated.")
+                    .setTitle("Error")
+                    .setDescription("Error while evaluating code.")
                     .addField("Input", `\`\`\`js\n${args.join(' ')}\n\`\`\``)
-                    .addField("Output", `\`\`\`js\n${clean(evaled)}\n\`\`\``)
+                    .addField("Output", `\`\`\`js\n${clean(err)}\n\`\`\``)
                     .setFooter(`Executed in ${msg.createdAt - message.createdAt}ms (Does not account for ping)`)
                     .setTimestamp()
                     .setColor("GREEN")
                 msg.edit(embedEd)
+                return;
             }
-        } catch (err) {
-            const embed = new MessageEmbed()
-                .setTitle("Error")
-                .setDescription("Error while evaluating code.")
-                .addField("Input", `\`\`\`js\n${args.join(' ')}\n\`\`\``)
-                .addField("Output", `\`\`\`js\n${clean(err)}\n\`\`\``)
-                .setFooter(`Processing...`)
-                .setTimestamp()
-                .setColor("RED")
-            const msg = await message.channel.send(embed)
-            const embedEd = new MessageEmbed()
-                .setTitle("Error")
-                .setDescription("Error while evaluating code.")
-                .addField("Input", `\`\`\`js\n${args.join(' ')}\n\`\`\``)
-                .addField("Output", `\`\`\`js\n${clean(err)}\n\`\`\``)
-                .setFooter(`Executed in ${msg.createdAt - message.createdAt}ms (Does not account for ping)`)
-                .setTimestamp()
-                .setColor("GREEN")
-            msg.edit(embedEd)
-            return;
         }
 
 
