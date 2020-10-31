@@ -4,8 +4,6 @@ const fs = require('fs')
 const { globalPrefix, unknownCmd, ownerID } = require('./config.json')
 const config = require('./config.json')
 const Keyv = require('keyv')
-const Constants = require('discord.js/src/util/Constants.js')
-Constants.DefaultOptions.ws.properties.$browser = `Discord Android`
 
 const client = new Client()
 client.commands = new Collection()
