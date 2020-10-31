@@ -4,7 +4,8 @@ const fs = require('fs')
 const { globalPrefix, unknownCmd, ownerID } = require('./config.json')
 const config = require('./config.json')
 const Keyv = require('keyv')
-const DBL = require('dblapi.js')
+const Constants = require('discord.js/src/util/Constants.js')
+Constants.DefaultOptions.ws.properties.$browser = `Discord Android`
 
 const client = new Client()
 client.commands = new Collection()
@@ -119,22 +120,11 @@ client.on('message', async message => {
     }
 })
 
-const dbl = new DBL(process.env.DBLTOKEN, client);
-
-// Optional events
-dbl.on('posted', () => {
-    console.log('Server count posted!');
-})
-
-dbl.on('error', e => {
-    console.log(`Oops! ${e}`);
-})
-
 client.once('ready', async () => {
     await client.user.setActivity("raven help", {
         type: "STREAMING",
         url: "https://twitch.tv/thaddeuskkr",
-        status: "dnd"
+        status: "online"
     }).catch(console.error)
     await client.user.setStatus("DND")
     console.log("Ready.")
