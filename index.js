@@ -121,8 +121,8 @@ client.on('message', async message => {
 })
 
 client.once('ready', async () => {
-    await client.user.setActivity("raven help", {
-        type: "STREAMING",
+    await client.user.setActivity("for raven help", {
+        type: "LISTENING",
         url: "https://twitch.tv/thaddeuskkr",
         status: "online"
     }).catch(console.error)
