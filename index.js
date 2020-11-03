@@ -1,4 +1,4 @@
-const { Client, Collection, MessageEmbed, WebhookClient } = require('discord.js')
+const { Client, Collection, MessageEmbed, WebhookClient, Structures } = require('discord.js')
 const Discord = require('discord.js')
 const fs = require('fs')
 const { globalPrefix, unknownCmd, ownerID } = require('./config.json')
@@ -20,6 +20,25 @@ const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
 db.on('error', err => {
     console.log(`Connection error (Keyv): ${err}`)
 })
+
+Structures.extend('Guild', function(Guild) {
+    class MusicGuild extends Guild {
+        constructor(client, data) {
+            super(client, data);
+            this.musicData = {
+                queue: [],
+                isPlaying: false,
+                nowPlaying: null,
+                songDispatcher: null,
+                skipTimer: false, // only skip if user used leave command
+                loopSong: false,
+                loopQueue: false,
+                volume: 0.5
+            };
+        }
+    }
+    return MusicGuild;
+});
 
 client.on('message', async message => {
 
