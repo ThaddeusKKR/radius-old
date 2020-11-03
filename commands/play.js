@@ -44,11 +44,13 @@ module.exports = {
         const msg = await message.channel.send(embed)
 
         search(query, opts, function (error, results) {
-            if (error || results.length < 1) {
+            if (error) {
                 const errEmb = new MessageEmbed()
-                    .setDescription(`Unable to find results for ${query}.`)
+                    .setDescription(`Unable to find results for \`${query}\`.`)
                     .setColor("RED")
                 msg.edit(errEmb)
+                console.log(error)
+                return;
             }
 
             console.log(results)
