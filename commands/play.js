@@ -25,7 +25,7 @@ module.exports = {
             console.log(`Connection error (Keyv): ${err}`)
         })
         const serverPrefix = await db.get(message.guild.id) || globalPrefix
-        if (!args) {
+        if (!args.length) {
             if (message.guild.musicData.isPlaying == false) {
                 message.guild.musicData.isPlaying = true
                 const embed = new MessageEmbed()
