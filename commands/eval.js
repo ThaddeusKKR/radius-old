@@ -92,7 +92,7 @@ module.exports = {
                 msg.edit(embedEd)
             }
         } catch (err) {
-            if (err.toString().includes("embed.fields[1].value: Must be 1024 or fewer in length")) {
+            if (err.toString().includes("Invalid Form Body")) {
                 const code = args.join(" ")
                 let evaled = eval(code)
 
