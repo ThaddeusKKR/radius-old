@@ -70,6 +70,7 @@ module.exports = {
             if (typeof evaled !== 'string') {
                 evaled = require("util").inspect(evaled);
             }
+            const haste = await hastebin(evaled, { extension: "txt" })
             if (tOutput == true) {
                 const embed = new MessageEmbed()
                     .setTitle("Eval")
@@ -82,7 +83,7 @@ module.exports = {
                 const msg = await message.channel.send(embed)
                 const embedEd = new MessageEmbed()
                     .setTitle("Eval")
-                    .setDescription("Code successfully evaluated.")
+                    .setDescription(`Code successfully evaluated. Click [here](${haste}) for the result.`)
                     .addField("Input", `\`\`\`js\n${args.join(' ')}\n\`\`\``)
                     .addField("Output", `\`\`\`js\n${clean(evaled)}\n\`\`\``)
                     .setFooter(`Executed in ${msg.createdAt - message.createdAt}ms (Does not account for ping)`)
@@ -91,6 +92,21 @@ module.exports = {
                 msg.edit(embedEd)
             }
         } catch (err) {
+            if (err.includes("embed.fields[1].value: Must be 1024 or fewer in length")) {
+                const code = args.join(" ")
+                let evaled = eval(code)
+
+                if (typeof evaled !== 'string') {
+                    evaled = require("util").inspect(evaled);
+                }
+                const haste = await hastebin(evaled, { extension: "txt" })
+                const embed = new MessageEmbed()
+                    .setTitle("Error")
+                    .setDescription(`Output too long - Click [here](${haste}) for the result.`)
+                    .setColor("RED")
+                message.channel.send(embed)
+                return;
+            }
             const embed = new MessageEmbed()
                 .setTitle("Error")
                 .setDescription("Error while evaluating code.")
