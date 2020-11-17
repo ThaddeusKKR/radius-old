@@ -8,19 +8,6 @@ const Keyv = require('keyv')
 const client = new Client()
 client.commands = new Collection()
 
-// Command Handler
-const commandFiles = fs.readdirSync('./commands')
-    .filter(file => file.endsWith('.js'))
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`)
-    client.commands.set(command.name, command)
-}
-
-const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
-db.on('error', err => {
-    console.log(`Connection error (Keyv): ${err}`)
-})
-
 Structures.extend('Guild', function(Guild) {
     class MusicGuild extends Guild {
         constructor(client, data) {
@@ -39,6 +26,19 @@ Structures.extend('Guild', function(Guild) {
     }
     return MusicGuild;
 });
+
+// Command Handler
+const commandFiles = fs.readdirSync('./commands')
+    .filter(file => file.endsWith('.js'))
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`)
+    client.commands.set(command.name, command)
+}
+
+const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
+db.on('error', err => {
+    console.log(`Connection error (Keyv): ${err}`)
+})
 
 client.on('message', async message => {
 
