@@ -5,9 +5,6 @@ const { globalPrefix, unknownCmd, ownerID } = require('./config.json')
 const config = require('./config.json')
 const Keyv = require('keyv')
 
-const client = new Client()
-client.commands = new Collection()
-
 Structures.extend('Guild', function(Guild) {
     class MusicGuild extends Guild {
         constructor(client, data) {
@@ -20,12 +17,15 @@ Structures.extend('Guild', function(Guild) {
                 skipTimer: false, // only skip if user used leave command
                 loopSong: false,
                 loopQueue: false,
-                volume: 0.5
+                volume: 1
             };
         }
     }
     return MusicGuild;
 });
+
+const client = new Client()
+client.commands = new Collection()
 
 // Command Handler
 const commandFiles = fs.readdirSync('./commands')
@@ -136,6 +136,27 @@ client.on('message', async message => {
         })
     }
 })
+
+client.on('voiceStateUpdate', async (___, newState) => {
+    if (
+        newState.member.user.bot &&
+        !newState.channelID &&
+        newState.guild.musicData.songDispatcher &&
+        newState.member.user.id == client.user.id
+    ) {
+        newState.guild.musicData.queue.length = 0;
+        newState.guild.musicData.songDispatcher.end();
+        return;
+    }
+    if (
+        newState.member.user.bot &&
+        newState.channelID &&
+        newState.member.user.id == client.user.id &&
+        !newState.selfDeaf
+    ) {
+        newState.setSelfDeaf(true);
+    }
+});
 
 client.once('ready', async () => {
     await client.user.setActivity("raven help", {
