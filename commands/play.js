@@ -126,8 +126,6 @@ module.exports = {
             return msg.edit(errorEmbed)
         };
 
-        console.log(message.guild)
-
         const addedEmbed = new MessageEmbed()
             .setTitle("Added to queue")
             .addField(`Title`, `[\`${videos[0].title}\`](https://www.youtube.com/watch?v=${videos[0].id})`)
@@ -146,6 +144,7 @@ module.exports = {
         };
 
         async function playSong(queue, message) {
+            console.log(queue)
             queue[0].voiceChannel
                 .join()
                 .then(function(connection) {
@@ -251,7 +250,7 @@ module.exports = {
             };
         }
 
-        async function formatDuration(durationObj) {
+        function formatDuration(durationObj) {
             const duration = `${durationObj.hours ? (durationObj.hours + ':') : ''}${
                 durationObj.minutes ? durationObj.minutes : '00'
             }:${
