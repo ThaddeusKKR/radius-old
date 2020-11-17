@@ -10,7 +10,7 @@ module.exports = {
     aliases: [],
     modOnly: false,
     ownerOnly: false,
-    async execute(message, args) {
+    async execute(message, args, prefix) {
 
     }
 }
