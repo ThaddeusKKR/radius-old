@@ -133,6 +133,7 @@ module.exports = {
             .addField(`Title`, `[\`${videos[0].title}\`](https://www.youtube.com/watch?v=${videos[0].id})`)
             .addField(`Requested by`, message.author.toString())
             .addField(`Position in queue`, message.guild.musicData.queue.length + 1)
+            .setColor("PURPLE")
         youtube.getVideoByID(videos[0].id).then(function(video) {
             message.guild.musicData.queue.push(constructSongObj(video, voiceChannel, message.member.user))
         })
@@ -235,7 +236,7 @@ module.exports = {
                 })
         }
 
-        async function constructSongObj(video, voiceChannel, user) {
+        function constructSongObj(video, voiceChannel, user) {
             let duration = formatDuration(video.duration);
             if (duration == '00:00') duration = 'LIVE';
             return {
