@@ -38,6 +38,8 @@ module.exports = {
             .addField(`Loop`, loopStatus, true)
             .setColor("PURPLE")
             .setImage(video.thumbnail)
+        return message.channel.send(embed)
+
         function formatDuration(durationObj) {
             const duration = `${durationObj.hours ? (durationObj.hours + ':') : ''}${
                 durationObj.minutes ? durationObj.minutes : '00'

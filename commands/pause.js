@@ -2,8 +2,8 @@ const { MessageEmbed } = require('discord.js')
 const Keyv = require('keyv')
 
 module.exports = {
-    name: '',
-    description: '',
+    name: 'pause',
+    description: 'Pauses the currently playing song',
     aliases: [],
     modOnly: false,
     ownerOnly: false,
@@ -21,5 +21,6 @@ module.exports = {
                 return message.channel.send(embed)
             }
         }
+
     }
 }
