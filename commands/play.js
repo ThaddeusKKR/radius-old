@@ -165,7 +165,7 @@ module.exports = {
                                 .setURL(queue[0].url)
                                 .setThumbnail(queue[0].thumbnail)
                                 .setFooter(
-                                    `Requested by ${queue[0].memberDisplayName}!`,
+                                    `Requested by ${queue[0].memberDisplayName}`,
                                     queue[0].memberAvatar
                                 );
                             if (queue[1] && !message.guild.musicData.loopSong) videoEmb.addField(`Next in queue`, queue[1].title)

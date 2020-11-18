@@ -18,6 +18,8 @@ module.exports = {
                 "- removed global prefix after setting server prefix\n" +
                 "+ added this changelog\n" +
                 "+ made it such that userinfo works with user ids as a argument\n" +
+                "+ made a working play command (haha music features coming soon)\n" +
+                "+ changed the default volume to 40%\n" +
                 "```")
             .setFooter(`Requested by ${message.author.tag}`)
             .setTimestamp()
