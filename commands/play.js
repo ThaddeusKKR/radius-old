@@ -137,10 +137,11 @@ module.exports = {
         })
         if (message.guild.musicData.isPlaying == false) {
             message.guild.musicData.isPlaying = true;
+            console.log(message.guild.musicData.queue)
             playSong(message.guild.musicData.queue, message)
             return msg.edit(addedEmbed)
         } else if (message.guild.musicData.isPlaying = true) {
-            return msg.edit(addedEmbeed)
+            return msg.edit(addedEmbed)
         };
 
         async function playSong(queue, message) {
