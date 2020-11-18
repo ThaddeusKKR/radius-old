@@ -89,14 +89,14 @@ module.exports = {
             }
             if (message.guild.musicData.isPlaying == false) {
                 const added = new MessageEmbed()
-                    .setDescription(`<:youtube:775411612248571904> | Playlist **${playlist.title}** has been added to the queue.`)
+                    .setDescription(`<:youtube:775411612248571904> | Playlist **${playlist.title}** (${videoArr.length} tracks) has been added to the queue.`)
                     .setColor("GREEN")
                 msg.edit(added)
                 message.guild.musicData.isPlaying = true
                 return playSong(message.guild.musicData.queue, message);
             } else if (message.guild.musicData.isPlaying == true) {
                 const added = new MessageEmbed()
-                    .setDescription(`<:youtube:775411612248571904> | Playlist **${playlist.title}** has been added to the queue.`)
+                    .setDescription(`<:youtube:775411612248571904> | Playlist **${playlist.title}** (${videoArr.length} tracks) has been added to the queue.`)
                     .setColor("GREEN")
                 return msg.edit(added)
             }
@@ -112,18 +112,19 @@ module.exports = {
                     .setColor("RED")
                 return msg.edit(errorEmbed)
             })
+            const addEmbed = new MessageEmbed()
+                .setTitle("Added to queue")
+                .addField(`Title`, `[${video.title}](${video.url})`)
+                .addField("Duration", formatDuration(video.duration))
+                .addField(`Position in queue`, `${message.guild.musicData.queue.length+1}`)
+                .setThumbnail(video.thumbnail)
+                .setColor("GREEN")
             message.guild.musicData.queue.push(constructSongObj(video, voiceChannel, message.member.user))
             if (message.guild.musicData.isPlaying == false || typeof message.guild.musicData.isPlaying == 'undefined') {
                 message.guild.musicData.isPlaying = true;
+                msg.edit(addEmbed)
                 return playSong(message.guild.musicData.queue, message)
             } else if (message.guild.musicData.isPlaying == true) {
-                const addEmbed = new MessageEmbed()
-                    .setTitle("Added to queue")
-                    .addField(`Title`, `[${video.title}](${video.url})`)
-                    .addField("Duration", formatDuration(video.duration))
-                    .addField(`Position in queue`, `${message.guild.musicData.queue.length+1}`)
-                    .setThumbnail(video.thumbnail)
-                    .setColor("GREEN")
                 return msg.edit(addEmbed)
             };
         }
