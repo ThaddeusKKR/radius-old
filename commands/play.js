@@ -40,7 +40,7 @@ module.exports = {
             }
         }
 
-        const query = args.join(' ')
+        let query = args.join(' ')
 
         const loading = new MessageEmbed()
             .setDescription("Searching...")
@@ -67,12 +67,6 @@ module.exports = {
 
             for (let i = 0; i < videoArr.length; i++) {
                 if (videoArr[i].raw.status.privacyStatus == 'private') continue;
-                if (i%10 == 0) {
-                    const editedEmbed = new MessageEmbed()
-                        .setDescription(`<:youtube:775411612248571904> | Processing playlist... | ${i} / ${videoArr.length}`)
-                        .setColor("ORANGE")
-                    msg.edit(processingEmb)
-                }
                 try {
                     const video = await videoArr[i].fetch();
                     message.guild.musicData.queue.push(constructSongObj(video, voiceChannel, message.member.user))
@@ -138,6 +132,7 @@ module.exports = {
 
         const addedEmbed = new MessageEmbed()
             .setTitle("Added to queue")
+            .setThumbnail(videos[0].thumbnail)
             .addField(`Title`, `[\`${videos[0].title}\`](https://www.youtube.com/watch?v=${videos[0].id})`)
             .addField(`Requested by`, message.author.toString())
             .addField(`Position in queue`, message.guild.musicData.queue.length + 1)
@@ -168,11 +163,9 @@ module.exports = {
                             message.guild.musicData.songDispatcher = dispatcher
                             dispatcher.setVolume(message.guild.musicData.volume);
                             const videoEmb = new MessageEmbed()
-                                .setTitle("Now Playing")
                                 .setColor("PURPLE")
-                                .addField(`Title`, queue[0].title)
-                                .addField(`Duration`, queue[0].duration)
-                                .setURL(queue[0].url)
+                                .addField(`Title`, `[\`${queue[0].title}\`](${queue[0].url})`)
+                                .addField(`Duration`, `\`${queue[0].duration}\``)
                                 .setThumbnail(queue[0].thumbnail)
                                 .setFooter(
                                     `Requested by ${queue[0].memberDisplayName}`,
