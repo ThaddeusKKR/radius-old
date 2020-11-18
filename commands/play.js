@@ -11,6 +11,9 @@ module.exports = {
     modOnly: false,
     ownerOnly: false,
     async execute(message, args) {
+        if (message.guild.musicData.private == true) {
+
+        }
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel) {
             const erEmb = new MessageEmbed()
@@ -106,8 +109,8 @@ module.exports = {
             } else if (message.guild.musicData.isPlaying == true) {
                 const addEmbed = new MessageEmbed()
                     .setTitle("Added to queue")
-                    .addField(`Title`, `\`${video.title}\``)
-                    .addField(formatDuration(video.duration))
+                    .addField(`Title`, `[${video.title}](${video.url})`)
+                    .addField("Duration", formatDuration(video.duration))
                     .addField(`Position in queue`, `${message.guild.musicData.queue.length+1}`)
                     .setColor("GREEN")
                 return msg.edit(addEmbed)
@@ -134,7 +137,8 @@ module.exports = {
         const addedEmbed = new MessageEmbed()
             .setTitle("Added to queue")
             .setThumbnail(videos[0].thumbnail)
-            .addField(`Title`, `[\`${videos[0].title}\`](https://www.youtube.com/watch?v=${videos[0].id})`)
+            .addField(`Title`, `[${videos[0].title}](https://www.youtube.com/watch?v=${videos[0].id})`)
+            .addField(`Duration`, videos[0].id)
             .addField(`Requested by`, message.author.toString())
             .addField(`Position in queue`, message.guild.musicData.queue.length + 1)
             .setColor("PURPLE")
@@ -169,12 +173,16 @@ module.exports = {
                                 .addField(`Duration`, `${queue[0].duration}`)
                                 .setThumbnail(queue[0].thumbnail)
                                 .setFooter(
-                                    `Requested by ${queue[0].memberDisplayName}`,
+                                    `Requested by ${queue[0].memberDisplayName} | ➡`,
                                     queue[0].memberAvatar
                                 );
                             if (queue[1] && !message.guild.musicData.loopSong) videoEmb.addField(`Next in queue`, `[${queue[1].title}](${queue[1].url})`)
                             if (message.guild.musicData.loopSong == true) {
-                                videoEmb.setFooter(`Requested by ${queue[0].memberDisplayName} | Looping this song`,
+                                videoEmb.setFooter(`Requested by ${queue[0].memberDisplayName} | 🔂`,
+                                    queue[0].memberAvatar)
+                            }
+                            if (message.guild.musicData.loopQueue == true) {
+                                videoEmb.setFooter(`Requested by ${queue[0].memberDisplayName} | 🔁`,
                                     queue[0].memberAvatar)
                             }
                             message.channel.send(videoEmb);

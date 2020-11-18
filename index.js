@@ -17,7 +17,8 @@ Structures.extend('Guild', function(Guild) {
                 skipTimer: false, // only skip if user used leave command
                 loopSong: false,
                 loopQueue: false,
-                volume: 0.4
+                volume: 0.4,
+                private: false
             };
         }
     }
