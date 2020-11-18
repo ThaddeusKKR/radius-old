@@ -19,13 +19,12 @@ module.exports = {
         channel.join().then(function(connection) {
             const dispatcher = connection
             if (message.guild.musicData.queue) {
-
+                message.guild.musicData.queue.forEach(song => song.voiceChannel = channel)
             }
         })
-        if (queue) {}
         embed
             .setColor("GREEN")
-            .setDescription(`Connected to \`${channel.name}\` (${channel.bitrate})\n`)
+            .setDescription(`Connected to \`${channel.name}\` (${channel.bitrate}kbps)\n`)
         message.channel.send(embed)
     }
 }
