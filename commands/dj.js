@@ -41,7 +41,16 @@ module.exports = {
                 .setColor("RED")
             return message.channel.send(err)
         }
-        const roleID = message.mentions.roles.first().id || message.guild.roles.cache.find(r => r.id === args[0] || r.name === args[0])
+        let roleID;
+        if (message.mentions.roles.first()) {
+            roleID = message.mentions.roles.first().id
+        } else if (message.guild.roles.cache.find(r => r.id === args[0])) {
+            roleID = message.guild.roles.cache.find(r => r.id === args[0]).id
+        } else if (message.guild.roles.cache.find(r => r.name === args[0])) {
+            roleID = message.guild.roles.cache.find(r => r.name === args[0]).id
+        } else {
+            return;
+        }
         privateRoleDB.set(message.guild.id, roleID)
         const embed = new MessageEmbed()
             .setDescription(`DJ role for this server set to <@&${roleID}>`)
