@@ -21,13 +21,13 @@ module.exports = {
                 return message.channel.send(embed)
             }
         }
-        if (!message.mentions.roles) {
+        if (!message.mentions.roles.first() || !message.guild.roles.cache.find(r => r.id === args[0] || r.name === args[0])) {
             const err = new MessageEmbed()
                 .setDescription(`You did not specify a role.`)
                 .setColor("RED")
             return message.channel.send(err)
         }
-        const roleID = message.mentions.roles.first().id
+        const roleID = message.mentions.roles.first().id || message.guild.roles.cache.find(r => r.id === args[0] || r.name === args[0])
         privateRoleDB.set(message.guild.id, roleID)
         const embed = new MessageEmbed()
             .setDescription(`DJ role for this server set to <@&${roleID}>`)
