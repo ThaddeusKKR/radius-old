@@ -237,7 +237,7 @@ module.exports = {
                             const errorEmbed = new MessageEmbed()
                                 .setDescription(`Critical Error | Unable to play song - stopped.`)
                                 .setColor("RED")
-                            message.channel.send(embed)
+                            message.channel.send(errorEmbed)
                             console.error(e);
                             if (queue.length > 1) {
                                 queue.shift();
@@ -257,6 +257,7 @@ module.exports = {
                     const noPermEmb = new MessageEmbed()
                         .setDescription(`I do not have permission to join your channel.`)
                         .setColor("RED")
+                    message.channel.send(noPermEmb)
                     message.guild.musicData.queue.length = 0;
                     message.guild.musicData.isPlaying = false;
                     message.guild.musicData.nowPlaying = null;
