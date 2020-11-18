@@ -136,7 +136,6 @@ module.exports = {
             message.guild.musicData.queue.push(constructSongObj(video, voiceChannel, message.member.user))
             if (message.guild.musicData.isPlaying == false) {
                 message.guild.musicData.isPlaying = true;
-                console.log(message.guild.musicData.queue)
                 playSong(message.guild.musicData.queue, message)
                 return msg.edit(addedEmbed)
             } else if (message.guild.musicData.isPlaying = true) {
@@ -145,8 +144,7 @@ module.exports = {
         })
 
 
-        async function playSong(queue, message) {
-            console.log(queue)
+        function playSong(queue, message) {
             queue[0].voiceChannel
                 .join()
                 .then(function(connection) {
