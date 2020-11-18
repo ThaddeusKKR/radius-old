@@ -29,6 +29,7 @@
     "hastebin-gen": "^2.0.5",
     "keyv": "^4.0.3",
     "simple-youtube-api": "^5.2.1",
-    "ytdl-core": "^4.0.3"
+    "ytdl-core": "^4.0.3",
+    "opusscript": "^0.0.7"
   }
 }
