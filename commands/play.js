@@ -107,6 +107,7 @@ module.exports = {
                 const addEmbed = new MessageEmbed()
                     .setTitle("Added to queue")
                     .addField(`Title`, `\`${video.title}\``)
+                    .addField(formatDuration(video.duration))
                     .addField(`Position in queue`, `${message.guild.musicData.queue.length+1}`)
                     .setColor("GREEN")
                 return msg.edit(addEmbed)
@@ -164,14 +165,18 @@ module.exports = {
                             dispatcher.setVolume(message.guild.musicData.volume);
                             const videoEmb = new MessageEmbed()
                                 .setColor("PURPLE")
-                                .addField(`Title`, `[\`${queue[0].title}\`](${queue[0].url})`)
-                                .addField(`Duration`, `\`${queue[0].duration}\``)
+                                .addField(`Title`, `[${queue[0].title}](${queue[0].url})`)
+                                .addField(`Duration`, `${queue[0].duration}`)
                                 .setThumbnail(queue[0].thumbnail)
                                 .setFooter(
                                     `Requested by ${queue[0].memberDisplayName}`,
                                     queue[0].memberAvatar
                                 );
-                            if (queue[1] && !message.guild.musicData.loopSong) videoEmb.addField(`Next in queue`, queue[1].title)
+                            if (queue[1] && !message.guild.musicData.loopSong) videoEmb.addField(`Next in queue`, `[${queue[1].title}](${queue[1].url})`)
+                            if (message.guild.musicData.loopSong == true) {
+                                videoEmb.setFooter(`Requested by ${queue[0].memberDisplayName} | Looping this song`,
+                                    queue[0].memberAvatar)
+                            }
                             message.channel.send(videoEmb);
                             message.guild.musicData.nowPlaying = queue[0];
                             queue.shift();
