@@ -148,7 +148,7 @@ module.exports = {
             .setTitle("Added to queue")
             .setThumbnail(videos[0].thumbnail)
             .addField(`Title`, `[${videos[0].title}](https://www.youtube.com/watch?v=${videos[0].id})`)
-            .addField(`Duration`, videos[0].id)
+            .addField(`Duration`, videos[0].duration)
             .addField(`Requested by`, message.author.toString())
             .addField(`Position in queue`, message.guild.musicData.queue.length + 1)
             .setColor("PURPLE")

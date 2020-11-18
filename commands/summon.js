@@ -24,7 +24,7 @@ module.exports = {
         })
         embed
             .setColor("GREEN")
-            .setDescription(`Connected to \`${channel.name}\` (${channel.bitrate}kbps)\n`)
+            .setDescription(`Connected to \`${channel.name}\` (${channel.bitrate / 1000}kbps)\n`)
         message.channel.send(embed)
     }
 }
