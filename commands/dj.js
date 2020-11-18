@@ -22,9 +22,9 @@ module.exports = {
             }
         } else if (message.guild.musicData.private == false) {
             const privateRole = await privateRoleDB.get(message.guild.id)
-            if (!message.member.roles.cache.find(r => r.id === privateRole) || !message.member.hasPermission('ADMINISTRATOR')) {
+            if (!message.member.roles.cache.find(r => r.id === privateRole) && !message.member.hasPermission('ADMINISTRATOR')) {
                 const embed = new MessageEmbed()
-                    .setDescription(`You need the DJ role or the Administrator permission to run this command. | DJ Role: ${privateRole.toString() || "None"}`)
+                    .setDescription(`You need the DJ role or the Administrator permission to run this command. | DJ Role: <@&${privateRole}>`)
                     .setColor("RED")
                 return message.channel.send(embed)
             }
