@@ -20,6 +20,14 @@ module.exports = {
                     .setColor("RED")
                 return message.channel.send(embed)
             }
+        } else if (message.guild.musicData.private == false) {
+            const privateRole = await privateRoleDB.get(message.guild.id)
+            if (!message.member.roles.cache.find(r => r.id === privateRole) || !message.member.hasPermission('ADMINISTRATOR')) {
+                const embed = new MessageEmbed()
+                    .setDescription(`You need the DJ role or the Administrator permission to run this command. | DJ Role: ${privateRole.toString() || "None"}`)
+                    .setColor("RED")
+                return message.channel.send(embed)
+            }
         }
         if (!args.length) {
             let state;
