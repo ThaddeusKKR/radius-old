@@ -39,7 +39,7 @@ module.exports = {
                 .setColor("RED")
             return message.channel.send(embed)
         }
-        if (args[0] != "q" || "queue" || "song" || "np" || "s" || "current") {
+        if (args[0] != "q" && "queue" && "song" && "np" && "s" && "current") {
             const embed = new MessageEmbed()
                 .setDescription(`Invalid loop type. Available types: \`song\`, \`queue\`.`)
                 .setColor("RED")
