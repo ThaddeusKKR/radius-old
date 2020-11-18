@@ -281,6 +281,7 @@ module.exports = {
                 thumbnail: video.thumbnails.high.url,
                 voiceChannel,
                 memberDisplayName: user.username,
+                requestedBy: user,
                 memberAvatar: user.avatarURL('webp', false, 16)
             };
         }

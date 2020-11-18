@@ -67,7 +67,7 @@ module.exports = {
                     .setColor("GREEN")
                 return message.channel.send(embed)
             } else {
-                message.guild.musicData.loopQueue = true;
+                message.guild.musicData.loopSong = true;
                 const embed = new MessageEmbed()
                     .setDescription(`Now looping the currently playing song. `)
                     .setColor("GREEN")

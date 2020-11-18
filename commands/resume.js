@@ -2,8 +2,8 @@ const { MessageEmbed } = require('discord.js')
 const Keyv = require('keyv')
 
 module.exports = {
-    name: 'pause',
-    description: 'Pauses the currently playing song',
+    name: 'resume',
+    description: 'Resumes the currently paused song.',
     aliases: [],
     modOnly: false,
     ownerOnly: false,
@@ -39,9 +39,9 @@ module.exports = {
                 .setColor("RED")
             return message.channel.send(embed)
         }
-        message.guild.musicData.songDispatcher.pause()
+        message.guild.musicData.songDispatcher.resume()
         const embed = new MessageEmbed()
-            .setDescription(`Paused.`)
+            .setDescription(`Resumed.`)
             .setColor("GREEN")
         message.channel.send(embed)
     }

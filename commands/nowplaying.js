@@ -36,6 +36,7 @@ module.exports = {
             .setDescription(description)
             .addField(`Title`, `[${video.title}](${video.url})`, true)
             .addField(`Loop`, loopStatus, true)
+            .addField(`Requested by`, video.requestedBy.toString())
             .setColor("PURPLE")
             .setImage(video.thumbnail)
         return message.channel.send(embed)
