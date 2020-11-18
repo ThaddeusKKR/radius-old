@@ -151,6 +151,7 @@ module.exports = {
                     const dispatcher = connection
                         .play(ytdl(queue[0].url, {
                             quality: 'highestaudio',
+                            filter: 'audioonly',
                             highWaterMark: 1 << 25
                         }))
                         .on('start', function() {
@@ -210,6 +211,11 @@ module.exports = {
                                 .setColor("RED")
                             message.channel.send(embed)
                             console.error(e);
+                            if (queue.length > 1) {
+                                queue.shift();
+                                classThis.playSong(queue, message);
+                                return;
+                            }
                             message.guild.musicData.queue.length = 0;
                             message.guild.musicData.isPlaying = false;
                             message.guild.musicData.nowPlaying = null;
@@ -217,7 +223,7 @@ module.exports = {
                             message.guild.musicData.songDispatcher = null;
                             message.guild.me.voice.channel.leave();
                             return;
-                        })
+                        });
                 })
                 .catch(err => {
                     const noPermEmb = new MessageEmbed()

@@ -152,9 +152,11 @@ client.on('voiceStateUpdate', async (___, newState) => {
         newState.member.user.bot &&
         newState.channelID &&
         newState.member.user.id == client.user.id &&
-        !newState.selfDeaf
+        !newState.selfDeaf &&
+        !newState.selfMute
     ) {
         newState.setSelfDeaf(true);
+        newState.setSelfMute(true);
     }
 });
 
