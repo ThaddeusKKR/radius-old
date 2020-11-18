@@ -169,7 +169,7 @@ module.exports = {
                                     queue[0].memberAvatar
                                 );
                             if (queue[1] && !message.guild.musicData.loopSong) videoEmb.addField(`Next in queue`, queue[1].title)
-                            message.say(videoEmb);
+                            message.channel.send(videoEmb);
                             message.guild.musicData.nowPlaying = queue[0];
                             queue.shift();
                             return;
