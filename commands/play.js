@@ -67,6 +67,12 @@ module.exports = {
 
             for (let i = 0; i < videoArr.length; i++) {
                 if (videoArr[i].raw.status.privacyStatus == 'private') continue;
+                if (i%10 = 0) {
+                    const editedEmbed = new MessageEmbed()
+                        .setDescription(`<:youtube:775411612248571904> | Processing playlist... | ${i} / ${videoArr.length}`)
+                        .setColor("ORANGE")
+                    msg.edit(processingEmb)
+                }
                 try {
                     const video = await videoArr[i].fetch();
                     message.guild.musicData.push(constructSongObj(video, voiceChannel, message.member.user))
