@@ -16,7 +16,7 @@ module.exports = {
         }
         const video = message.guild.musicData.nowPlaying
         let description;
-        if (video.duration == 'Live Stream') {
+        if (video.duration == 'LIVE') {
             description = '**LIVE**';
         } else {
             description = playbackBar(message, video);
