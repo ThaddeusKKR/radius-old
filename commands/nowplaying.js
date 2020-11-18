@@ -19,7 +19,7 @@ module.exports = {
         if (video.duration == 'Live Stream') {
             description = '**LIVE**';
         } else {
-            description = NowPlayingCommand.playbackBar(message, video);
+            description = playbackBar(message, video);
         }
 
         let loopStatus;
@@ -57,12 +57,12 @@ module.exports = {
                 minutes: Math.floor((passedTimeInMS / (1000 * 60)) % 60),
                 hours: Math.floor((passedTimeInMS / (1000 * 60 * 60)) % 24)
             };
-            const passedTimeFormatted = NowPlayingCommand.formatDuration(
+            const passedTimeFormatted = formatDuration(
                 passedTimeInMSObj
             );
 
             const totalDurationObj = video.rawDuration;
-            const totalDurationFormatted = NowPlayingCommand.formatDuration(
+            const totalDurationFormatted = formatDuration(
                 totalDurationObj
             );
 
