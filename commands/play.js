@@ -67,7 +67,7 @@ module.exports = {
 
             for (let i = 0; i < videoArr.length; i++) {
                 if (videoArr[i].raw.status.privacyStatus == 'private') continue;
-                if (i%10 = 0) {
+                if (i%10 == 0) {
                     const editedEmbed = new MessageEmbed()
                         .setDescription(`<:youtube:775411612248571904> | Processing playlist... | ${i} / ${videoArr.length}`)
                         .setColor("ORANGE")
@@ -81,6 +81,10 @@ module.exports = {
                 }
             }
             if (message.guild.musicData.isPlaying == false) {
+                const added = new MessageEmbed()
+                    .setDescription(`<:youtube:775411612248571904> | Playlist **${playlist.title}** has been added to the queue.`)
+                    .setColor("GREEN")
+                msg.edit(added)
                 message.guild.musicData.isPlaying = true
                 return playSong(message.guild.musicData.queue, message);
             } else if (message.guild.musicData.isPlaying == true) {
