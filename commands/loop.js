@@ -46,6 +46,12 @@ module.exports = {
             return message.channel.send(embed)
         }
         if (args[0] == "q" || args[0] == "queue") {
+            if (message.guild.musicData.loopSong == true) {
+                const embed = new MessageEmbed()
+                    .setDescription(`Song loop is already on - turn off song loop / skip the current song before turning on queue loop.`)
+                    .setColor("GREEN")
+                return message.channel.send(embed)
+            }
             if (message.guild.musicData.loopQueue == true) {
                 message.guild.musicData.loopQueue = false;
                 const embed = new MessageEmbed()
@@ -60,6 +66,12 @@ module.exports = {
                 return message.channel.send(embed)
             }
         } else if (args[0] == "song" || args[0] == "np" || args[0] == "s" || args[0] == "current") {
+            if (message.guild.musicData.loopQueue == true) {
+                const embed = new MessageEmbed()
+                    .setDescription(`Queue loop is already on - turn off queue loop before turning on song loop.`)
+                    .setColor("GREEN")
+                return message.channel.send(embed)
+            }
             if (message.guild.musicData.loopSong == true) {
                 message.guild.musicData.loopSong = false;
                 const embed = new MessageEmbed()
