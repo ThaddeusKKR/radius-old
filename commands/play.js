@@ -75,7 +75,7 @@ module.exports = {
                 }
                 try {
                     const video = await videoArr[i].fetch();
-                    message.guild.musicData.push(constructSongObj(video, voiceChannel, message.member.user))
+                    message.guild.musicData.queue.push(constructSongObj(video, voiceChannel, message.member.user))
                 } catch (err) {
                     console.error(err)
                 }
