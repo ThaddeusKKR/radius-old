@@ -63,7 +63,7 @@ module.exports = {
             const processingEmb = new MessageEmbed()
                 .setDescription(`<:youtube:775411612248571904> | Processing playlist...`)
                 .setColor("ORANGE")
-            return msg.edit(processingEmb)
+            msg.edit(processingEmb)
 
             for (let i = 0; i < videoArr.length; i++) {
                 if (videoArr[i].raw.status.privacyStatus == 'private') continue;
