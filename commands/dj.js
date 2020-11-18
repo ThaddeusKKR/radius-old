@@ -26,8 +26,7 @@ module.exports = {
             if (message.guild.musicData.private == false) {
                 message.guild.musicData.private = true;
                 state = "enabled"
-            }
-            if (message.guild.musicData.private == true) {
+            } else if (message.guild.musicData.private == true) {
                 message.guild.musicData.private = false;
                 state = "disabled"
             }
@@ -36,7 +35,7 @@ module.exports = {
                 .setColor("GREEN")
             return message.channel.send(embed)
         }
-        if (!message.mentions.roles.first() || !message.guild.roles.cache.find(r => r.id === args[0] || r.name === args[0])) {
+        if (!message.mentions.roles.first() && !message.guild.roles.cache.find(r => r.id === args[0] || r.name === args[0])) {
             const err = new MessageEmbed()
                 .setDescription(`You did not specify a role.`)
                 .setColor("RED")
