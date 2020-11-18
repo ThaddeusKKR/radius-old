@@ -122,6 +122,7 @@ module.exports = {
                     .addField(`Title`, `[${video.title}](${video.url})`)
                     .addField("Duration", formatDuration(video.duration))
                     .addField(`Position in queue`, `${message.guild.musicData.queue.length+1}`)
+                    .setThumbnail(video.thumbnail)
                     .setColor("GREEN")
                 return msg.edit(addEmbed)
             };
@@ -150,8 +151,9 @@ module.exports = {
                 .setThumbnail(videos[0].thumbnail)
                 .addField(`Title`, `[${video.title}](https://www.youtube.com/watch?v=${videos[0].id})`)
                 .addField(`Duration`, formatDuration(video.duration))
-                .addField(`Requested by`, message.author.toString())
-                .addField(`Position in queue`, message.guild.musicData.queue.length + 1)
+                .addField(`Requested by`, message.author.toString(), true)
+                .addField(`Position in queue`, message.guild.musicData.queue.length + 1, true)
+                .setThumbnail(video.thumbnail)
                 .setColor("PURPLE")
             message.guild.musicData.queue.push(constructSongObj(video, voiceChannel, message.member.user))
             if (message.guild.musicData.isPlaying == false) {
@@ -293,6 +295,10 @@ module.exports = {
                     : '00')
             }`;
             return duration;
+        }
+
+        function estTime(queue) {
+            // Work on this later
         }
     }
 }

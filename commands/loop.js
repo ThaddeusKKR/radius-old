@@ -39,13 +39,13 @@ module.exports = {
                 .setColor("RED")
             return message.channel.send(embed)
         }
-        if (args[0] != "q" && "queue" && "song" && "np" && "s" && "current") {
+        if (args[0] != "q" && args[0] != "queue" && args[0] != "song" && args[0] != "np" && args[0] != "s" && args[0] != "current") {
             const embed = new MessageEmbed()
                 .setDescription(`Invalid loop type. Available types: \`song\`, \`queue\`.`)
                 .setColor("RED")
             return message.channel.send(embed)
         }
-        if (args[0] == "q" || "queue") {
+        if (args[0] == "q" || args[0] == "queue") {
             if (message.guild.musicData.loopQueue == true) {
                 message.guild.musicData.loopQueue = false;
                 const embed = new MessageEmbed()
@@ -59,7 +59,7 @@ module.exports = {
                     .setColor("GREEN")
                 return message.channel.send(embed)
             }
-        } else if (args[0] == "song" || "np" || "s" || "current") {
+        } else if (args[0] == "song" || args[0] == "np" || args[0] == "s" || args[0] == "current") {
             if (message.guild.musicData.loopSong == true) {
                 message.guild.musicData.loopSong = false;
                 const embed = new MessageEmbed()
