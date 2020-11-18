@@ -133,7 +133,7 @@ module.exports = {
             .addField(`Position in queue`, message.guild.musicData.queue.length + 1)
             .setColor("PURPLE")
         youtube.getVideoByID(videos[0].id).then(function(video) {
-            message.guild.musicData.queue.push(constructSongObj(video, voiceChannel, message.member.user))
+            message.guild.musicData.queue.push(constructSongObj(video, voiceChannel, message.member.user)).then((console.log("Song object constructed.")))
         })
         if (message.guild.musicData.isPlaying == false) {
             message.guild.musicData.isPlaying = true;
