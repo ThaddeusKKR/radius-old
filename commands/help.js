@@ -81,8 +81,8 @@ module.exports = {
 
         message.channel.send(embed)
 
-        function findDuplicates (string) {
-            string = string.replace(/[ ]/g,"").split(",");
+        function findDuplicates (str) {
+            str = str.replace(/[ ]/g,"").split(",");
             var result = [];
             for(var i =0; i < str.length ; i++) {
                 if (result.indexOf(str[i]) == -1) result.push(str[i]);
