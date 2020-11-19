@@ -11,6 +11,12 @@ module.exports = {
 
         const { commands } = message.client;
 
+        /*
+        commands.forEach(function (cmd) {
+            if ()
+        })
+         */
+
         const commandList = commands.map(command => command.name).join('\`, \`')
 
         const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})

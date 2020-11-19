@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
     name: 'kick',
     description: 'Kicks a user',
+    category: 'moderation',
     aliases: [],
     modOnly: true,
     async execute(message, args) {

@@ -3,8 +3,9 @@ const Keyv = require('keyv')
 
 module.exports = {
     name: 'dj',
-    description: 'Toggles DJ only mode.',
+    description: 'Toggles DJ only mode and if an argument is provided, sets the DJ role.',
     aliases: ['djonly'],
+    category: 'settings',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args, prefix) {

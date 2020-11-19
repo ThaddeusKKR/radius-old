@@ -5,6 +5,7 @@ module.exports = {
     name: 'skipto',
     description: 'Skips to a specific song in the queue.',
     aliases: [],
+    category: 'music',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args, prefix) {

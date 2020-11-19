@@ -5,6 +5,7 @@ module.exports = {
     name: 'nowplaying',
     description: 'Shows you the currently playing song.',
     aliases: ['np'],
+    category: 'music',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args, prefix) {

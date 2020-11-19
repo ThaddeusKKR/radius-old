@@ -5,6 +5,7 @@ module.exports = {
     name: 'disconnect',
     description: 'Disconnects the bot and stops all music.',
     aliases: ['dc', 'fuckoff', 'leave'],
+    category: 'music',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args, prefix) {

@@ -5,6 +5,7 @@ module.exports = {
     name: 'pause',
     description: 'Pauses the currently playing song',
     aliases: [],
+    category: 'music',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args, prefix) {

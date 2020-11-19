@@ -6,6 +6,7 @@ module.exports = {
     name: 'prefix',
     description: 'Sets the prefix for this server.',
     aliases: [],
+    category: 'settings',
     modOnly: true,
     async execute(message, args) {
         const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})

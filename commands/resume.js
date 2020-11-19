@@ -6,6 +6,7 @@ module.exports = {
     description: 'Resumes the currently paused song.',
     aliases: [],
     modOnly: false,
+    category: 'music',
     ownerOnly: false,
     async execute(message, args, prefix) {
         if (message.guild.musicData.private == true) {

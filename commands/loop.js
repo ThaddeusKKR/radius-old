@@ -5,6 +5,7 @@ module.exports = {
     name: 'loop',
     description: 'Toggles loop of the current song / queue (defaults to song)',
     aliases: ['lp', 'repeat'],
+    category: 'music',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args, prefix) {

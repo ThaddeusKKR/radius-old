@@ -6,6 +6,7 @@ module.exports = {
     name: 'summon',
     description: 'Summons the bot to your voice channel',
     aliases: ['join'],
+    category: 'music',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args) {

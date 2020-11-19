@@ -8,6 +8,7 @@ module.exports = {
     name: 'play',
     description: 'Plays a song from YouTube.',
     aliases: ['p'],
+    category: 'music',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args) {

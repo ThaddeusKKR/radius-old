@@ -5,6 +5,7 @@ module.exports = {
     name: 'skip',
     description: 'Skips the currently playing song',
     aliases: ['s'],
+    category: 'music',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args, prefix) {

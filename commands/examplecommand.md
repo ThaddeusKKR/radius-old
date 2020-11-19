@@ -7,6 +7,7 @@ module.exports = {
     name: '',
     description: '',
     aliases: [],
+    category: '',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args, prefix) {
@@ -24,6 +25,7 @@ module.exports = {
     name: '',
     description: '',
     aliases: [],
+    category: 'music',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args, prefix) {

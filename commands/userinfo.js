@@ -6,6 +6,7 @@ module.exports = {
     name: 'userinfo',
     description: 'Shows you information about a user (Mention).',
     aliases: ['ui', 'user'],
+    category: 'tools',
     async execute(message, args) {
 
         const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
