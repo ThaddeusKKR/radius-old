@@ -33,6 +33,7 @@
     "keyv": "^4.0.3",
     "simple-youtube-api": "^5.2.1",
     "ytdl-core": "^4.0.3",
-    "opusscript": "^0.0.7"
+    "opusscript": "^0.0.7",
+    "discord-paginationembed": "^2.1.0"
   }
 }

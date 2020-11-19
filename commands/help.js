@@ -12,9 +12,9 @@ module.exports = {
         const { commands } = message.client;
 
 
-        const categories = message.client.commands.map(cmd => cmd.category).join()
+        const fullCategories = message.client.commands.map(cmd => cmd.category).join()
 
-        console.log(findDuplicates(categories))
+        let cats = findDuplicates(fullCategories) // cats is an array of all command categories, work on this later.
 
         const commandList = commands.map(command => command.name).join('\`, \`')
 
