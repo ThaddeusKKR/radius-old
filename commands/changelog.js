@@ -6,6 +6,7 @@ module.exports = {
     name: 'changelog',
     description: 'Shows the most recent changelog.',
     aliases: ['cl'],
+    category: 'info',
     modOnly: false,
     ownerOnly: false,
     async execute(message, args) {
