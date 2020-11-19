@@ -11,11 +11,10 @@ module.exports = {
 
         const { commands } = message.client;
 
-        /*
-        commands.forEach(function (cmd) {
-            if ()
-        })
-         */
+
+        const categories = message.client.commands.map(cmd => cmd.category).join()
+
+        console.log(findDuplicates(categories))
 
         const commandList = commands.map(command => command.name).join('\`, \`')
 
@@ -81,5 +80,14 @@ module.exports = {
             .setColor("PURPLE")
 
         message.channel.send(embed)
+
+        function findDuplicates (string) {
+            string = string.replace(/[ ]/g,"").split(",");
+            var result = [];
+            for(var i =0; i < str.length ; i++) {
+                if (result.indexOf(str[i]) == -1) result.push(str[i]);
+            }
+            return result;
+        }
     }
 }
