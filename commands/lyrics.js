@@ -57,7 +57,7 @@ module.exports = {
                     new MessageEmbed()
                         .setTitle(`Lyrics | ${result.data[0].name} - ${result.data[0].artist}`)
                         .setDescription(lyrics.slice(b * 2048, i * 2048))
-                        .setFooter(`Powered by KSoft.si | Page ${i} of ${lyricsIndex - 1}`)
+                        .setFooter(`Powered by KSoft.si | Page ${i} of ${lyricsIndex}`)
                 )
             }
             const lyricsEmb = new Pagination.Embeds()

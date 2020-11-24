@@ -2,6 +2,10 @@
 + improved the design of the queue embed and made it easier for changelog to work
 + maintenance mode :)
 + lyrics command
++ improved the design of the lyrics command and queue command using pagination embed
+++ npm install discord-paginationembed
+++ credits to galnir for the idea
+++ yes i know i can do this using reaction collector but i'm lazy to do it for every command that needs it
 
 == Latest Release -- version 5.5 ==
 + fixed various reported bugs, such as "service unavailable" errors after executing some commands
