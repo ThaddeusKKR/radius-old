@@ -37,8 +37,12 @@ module.exports = {
             .setChannel(message.channel)
             .setElementsPerPage(8)
             .formatField(`# - Song`, function(e) {
-                let title = e.title.slice(0, 56)
-                title = `${title}...`
+                if (e.title.length > 56) {
+                    let title = e.title.slice(0, 56)
+                    title = `${title}...`
+                } else {
+                    title = e.title
+                }
                 return `**${queueClone.indexOf(e) + 1}**: [${title}](${e.url}) - ${e.requestedBy.tag}`;
             });
 
