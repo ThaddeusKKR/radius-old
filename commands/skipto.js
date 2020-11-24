@@ -52,7 +52,7 @@ module.exports = {
             const diffVc = new MessageEmbed()
                 .setDescription(`You are not in the same voice channel as the bot.`)
                 .setColor("RED")
-            return message.channel.send(noSong)
+            return message.channel.send(diffVc)
         }
 
         if (message.guild.musicData.queue < 1) {
