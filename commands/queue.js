@@ -29,7 +29,7 @@ module.exports = {
             .setChannel(message.channel)
             .setElementsPerPage(10)
             .formatField('# - Song', function(e) {
-                return `**${queueClone.indexOf(e) + 1}**: ${e.title}`;
+                return `**${queueClone.indexOf(e) + 1}**: [${e.title}](${e.url}) - ${e.requestedBy.toString()}`;
             });
 
         queueEmbed.embed.setColor('PURPLE').setTitle(`Queue for ${message.guild.name}`)
