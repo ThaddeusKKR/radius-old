@@ -18,8 +18,7 @@ module.exports = {
 
         let cmdArr = [];
         commands.forEach(cmd => {
-            if (cmd.ownerOnly == true) continue;
-            cmdArr.push(cmd.name)
+            if (cmd.ownerOnly == false) cmdArr.push(cmd.name)
         })
         const commandList = cmdArr.join('\`, \`')
 
@@ -39,7 +38,7 @@ module.exports = {
                 .setDescription(`This is a list of all my commands.\nYou can run \`${await db.get(message.guild.id) || globalPrefix}help [command name]\` to get more information on a command.`)
                 .addField("Commands", `\`${commandList}\``)
                 .setColor("PURPLE")
-                .setFooter(`Requested by ${message.author.tag}`)
+                .setFooter(`${commands.length} commands | Requested by ${message.author.tag}`)
                 .setTimestamp()
             message.channel.send(embed)
             return;
@@ -60,7 +59,7 @@ module.exports = {
         if (command.ownerOnly == true) {
             limitations = "This command is only available for the owner of the bot."
         } else if (command.modOnly == true) {
-            limitations = "This command is only available for the adminstrator of this server."
+            limitations = "This command is only available for an admin of this server."
         } else if (!command.ownerOnly && !command.modOnly) {
             limitations = "None"
         } else {
