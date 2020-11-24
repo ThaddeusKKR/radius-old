@@ -37,8 +37,8 @@ module.exports = {
             .setElementsPerPage(8)
             .formatField(`# - Song`, function(e) {
                 let title;
-                if (e.title.length > 50) {
-                    e.title.slice(50, e.title.length)
+                if (e.title.length > 40) {
+                    e.title.slice(40, e.title.length)
                     title = `${e.title}...`
                 } else {
                     title = e.title
