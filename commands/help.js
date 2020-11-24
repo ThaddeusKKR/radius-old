@@ -18,7 +18,7 @@ module.exports = {
 
         let cmdArr = [];
         commands.forEach(cmd => {
-            if (cmd.ownerOnly == false) cmdArr.push(cmd.name)
+            if (cmd.ownerOnly == false || !command.ownerOnly) cmdArr.push(cmd.name)
         })
         const commandList = cmdArr.join('\`, \`')
 
