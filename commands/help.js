@@ -21,7 +21,7 @@ module.exports = {
             if (cmd.ownerOnly == true) continue;
             cmdArr.push(cmd.name)
         })
-        const commandList = commands.map(command => command.name).join('\`, \`')
+        const commandList = cmdArr.join('\`, \`')
 
         const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
         db.on('error', err => {
