@@ -57,15 +57,25 @@ module.exports = {
             return message.channel.send(noSongs)
         }
 
+        const song = message.guild.musicData.queue[songNumber - 1]
+
         if (!message.guild.musicData.loopQueue) {
             message.guild.musicData.queue.splice(0, songNumber - 1);
             message.guild.musicData.loopSong = false;
             message.guild.musicData.songDispatcher.end();
+            const embed = new MessageEmbed()
+                .setDescription(`Skipped to [${song.title}](${song.url}).`)
+                .setColor("GREEN")
+            return message.channel.send(embed)
         } else if (message.guild.musicData.loopQueue) {
             const slicedBefore = message.guild.musicData.queue.slice(0, songNumber - 1);
             const slicedAfter = message.guild.musicData.queue.slice(songNumber - 1);
             message.guild.musicData.queue = slicedAfter.concat(slicedBefore);
             message.guild.musicData.songDispatcher.end();
+            const embed = new MessageEmbed()
+                .setDescription(`Skipped to [${song.title}](${song.url}).`)
+                .setColor("GREEN")
+            return message.channel.send(embed)
         }
     }
 }

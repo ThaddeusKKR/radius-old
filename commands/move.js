@@ -25,7 +25,7 @@ module.exports = {
         const oldPos = args[0]
         const newPos = args[1]
 
-        if (oldPos < 1 || oldPos > message.guild.musicData.queue.length || newPos < 1 || newPos > message.guild.musicData.queue.length || oldPos == newPosition) {
+        if (oldPos < 1 || oldPos > message.guild.musicData.queue.length || newPos < 1 || newPos > message.guild.musicData.queue.length || oldPos == newPos) {
             const errorEmb = new MessageEmbed()
                 .setDescription(`You entered an invalid song number.`)
                 .setColor("RED")

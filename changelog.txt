@@ -1,4 +1,8 @@
 == Branch: master (current version) ==
+- removed the 'summon' command due to it not being needed
++ bunch of new commands added to the release
+
+== Latest Release -- version 6.0 ==
 + improved the design of the queue embed and made it easier for changelog to work
 + maintenance mode :)
 + lyrics command
@@ -6,11 +10,7 @@
 ++ npm install discord-paginationembed
 ++ credits to galnir for the idea
 ++ yes i know i can do this using reaction collector but i'm lazy to do it for every command that needs it
-- removed the 'summon' command due to it not being needed
-+ bunch of new commands added to the release
-
-== Latest Release -- version 5.5 ==
-+ new commands: skipto, lyrics, remove, volume, move
++ new commands: skipto,  remove, volume, move
 + use the help command for a full list of commands
 
 == Planned Changes ==
