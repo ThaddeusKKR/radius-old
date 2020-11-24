@@ -12,7 +12,7 @@ module.exports = {
     modOnly: false,
     ownerOnly: false,
     async execute(message, args, prefix) {
-        const songName = args.join(' ')
+        let songName = args.join(' ')
         if (songName == '' && message.guild.musicData.isPlaying) {
             songName = message.guild.musicData.nowPlaying.title
         } else if (songName == '' && !message.guild.musicData.isPlaying) {
