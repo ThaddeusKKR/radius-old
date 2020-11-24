@@ -1,0 +1,19 @@
+== Branch: master (current version) ==
++ improved the design of the queue embed and made it easier for changelog to work
++ maintenance mode :)
+
+== Latest Release -- version 5.4 ==
++ fixed various reported bugs, such as "service unavailable" errors after executing some commands
++ new music commands; such as queue and now playing
+
+== Planned Changes ==
++ add a stop command
++ other stuff
+
+== Previous Versions [ Removed after the next release ] ==
++ music features
++ changed the default volume to 40%
++ more music commands such as queue
+- removed ability to use global prefix after server prefix is added
++ added this changelog
++ made it such that userinfo works with user ids as a argument
