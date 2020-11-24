@@ -16,6 +16,13 @@ module.exports = {
                 .setColor("RED")
             return message.channel.send(embed)
         }
+        if (message.guild.musicData.queue.length == 0 && message.guild.musicData.nowPlaying) {
+            const embed = new MessageEmbed()
+                .setTitle(`Queue for ${message.guild.name}`)
+                .addField(`Now Playing`, `[${message.guild.musicData.nowPlaying.title}](${message.guild.musicData.nowPlaying.url}) - ${mesasge.guild.musicData.nowPlaying.requestedBy.toString()}`)
+                .addField(`# - Song`, `No songs in queue.`)
+            return message.channel.send(embed)
+        }
         if (message.guild.musicData.queue.length == 0) {
             const embed = new MessageEmbed()
                 .setDescription(`There are no songs in queue!`)
