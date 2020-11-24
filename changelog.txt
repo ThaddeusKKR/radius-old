@@ -1,10 +1,12 @@
 == Branch: master (current version) ==
 + improved the design of the queue embed and made it easier for changelog to work
 + maintenance mode :)
++ lyrics command
 
-== Latest Release -- version 5.4 ==
+== Latest Release -- version 5.5 ==
 + fixed various reported bugs, such as "service unavailable" errors after executing some commands
 + new music commands; such as queue and now playing
++ lyrics command
 
 == Planned Changes ==
 + add a stop command

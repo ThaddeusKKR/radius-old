@@ -28,7 +28,7 @@ module.exports = {
         const searchingEmbed = new MessageEmbed()
             .setDescription(`Searching... \`${songName}\``)
             .setColor("ORANGE")
-        const searching = await message.channel.send(searchingEmbed)
+        const msg = await message.channel.send(searchingEmbed)
 
         var url = `https://api.ksoft.si/lyrics/search?q=${encodeURI(songName)}`
 
