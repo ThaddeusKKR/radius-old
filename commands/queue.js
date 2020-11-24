@@ -37,13 +37,13 @@ module.exports = {
             .setElementsPerPage(8)
             .formatField(`# - Song`, function(e) {
                 let title;
-                if (e.title.length > 40) {
-                    e.title.slice(40, e.title.length)
+                if (e.title.length > 64) {
+                    e.title.slice(64, e.title.length)
                     title = `${e.title}...`
                 } else {
                     title = e.title
                 }
-                return `**${queueClone.indexOf(e) + 1}**: [${title}](${e.url}) - ${e.requestedBy.toString()}`;
+                return `**${queueClone.indexOf(e) + 1}**: [${title}](${e.url}) - ${e.requestedBy.tag}`;
             });
 
 
