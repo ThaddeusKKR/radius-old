@@ -24,11 +24,6 @@ module.exports = {
         }
 
         const songNumber = args[0]
-        // work on this later
-        const embed = new MessageEmbed()
-            .setDescription(`This command is not ready for use.`)
-            .setColor("RED")
-        return message.channel.send(embed)
 
         if (songNumber < 1 && songNumber >= message.guild.musicData.queue.length) {
             const errorEmb = new MessageEmbed()

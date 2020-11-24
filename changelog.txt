@@ -9,7 +9,7 @@
 - removed the 'summon' command due to it not being needed
 
 == Latest Release -- version 5.5 ==
-+ new commands: skipto, lyrics
++ new commands: skipto, lyrics, remove
 
 == Planned Changes ==
 + add a stop command

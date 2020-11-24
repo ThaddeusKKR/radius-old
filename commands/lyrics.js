@@ -72,7 +72,7 @@ module.exports = {
                 .setDescription(`Found lyrics for \`${songName}\`.`)
                 .setColor("GREEN")
 
-            msg.edit(found, lyricsEmb.build()).then(msg => msg.delete({ timeout: 5000 }))
+            msg.edit(found).then(lyricsEmb.build()).then(msg => msg.delete({ timeout: 5000 }))
             return
         } catch (err) {
             const errEmbed = new MessageEmbed()
