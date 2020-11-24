@@ -38,17 +38,17 @@ module.exports = {
             .setElementsPerPage(8)
             .formatField(`# - Song`, function(e) {
                 let title;
-                if (e.title.length > 60) {
-                    e.title.slice(60, e.title.length)
+                if (e.title.length > 40) {
+                    e.title.slice(40, e.title.length)
                     title = `${e.title}...`
                 } else {
                     title = e.title
                 }
-                return `**${queueClone.indexOf(e) + 1}**: [${title}](${e.url})`;
+                return `**${queueClone.indexOf(e) + 1}**: [${title}](${e.url}) (${e.requestedBy.tag})`;
             });
 
 
-        queueEmbed.embed.setColor('PURPLE').setTitle(`Queue for ${message.guild.name}`).setFooter(`Use ${prefix}info to see information about a song in queue.`)
+        queueEmbed.embed.setColor('PURPLE').setTitle(`Queue for ${message.guild.name}`)
         queueEmbed.build();
     }
 }

@@ -37,6 +37,7 @@ module.exports = {
             .addField(`Duration`, song.duration, true)
             .addField(`Requested by`, song.requestedBy.toString(), true)
             .addField(`Position in queue`, index + 1)
+            .setColor("PURPLE")
             .setImage(song.thumbnail)
         return message.channel.send(embed)
     }
