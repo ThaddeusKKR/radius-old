@@ -23,6 +23,24 @@ module.exports = {
                 return message.channel.send(embed)
             }
         }
+        let voiceChannel = message.member.voice.channel
+        if (!voiceChannel) {
+            const noVoice = new MessageEmbed()
+                .setDescription(`You are not in a voice channel!`)
+                .setColor("RED")
+            return message.channel.send(noVoice)
+        }
+        if (typeof message.guild.musicData.songDispatcher == 'undefined' || message.guild.musicData.songDispatcher == null) {
+            const noSong = new MessageEmbed()
+                .setDescription(`There is nothing playing.`)
+                .setColor("RED")
+            return message.channel.send(noSong)
+        } else if (voiceChannel.id !== message.guild.me.voice.channel.id) {
+            const diffVc = new MessageEmbed()
+                .setDescription(`You are not in the same voice channel as the bot.`)
+                .setColor("RED")
+            return message.channel.send(diffVc)
+        }
         if (!args.length) {
             const embed = new MessageEmbed()
                 .setDescription(`You did not provide any arguments!`)

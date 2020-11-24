@@ -10,10 +10,11 @@
 + bunch of new commands added to the release
 
 == Latest Release -- version 5.5 ==
-+ new commands: skipto, lyrics, remove, volume
++ new commands: skipto, lyrics, remove, volume, move
 + use the help command for a full list of commands
 
 == Planned Changes ==
++ categorising of commands (delayed)
 + other stuff
 
 == Previous Versions [ Removed after the next release ] ==
