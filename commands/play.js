@@ -32,6 +32,12 @@ module.exports = {
                 .setColor("RED")
             return message.channel.send(erEmb)
         }
+        if (voiceChannel.id !== message.guild.me.voice.channel.id) {
+            const diffVc = new MessageEmbed()
+                .setDescription(`You are not in the same voice channel as the bot.`)
+                .setColor("RED")
+            return message.channel.send(noSong)
+        }
         const youtube = new Youtube(process.env.YTKEY)
         const user = message.author
         const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})

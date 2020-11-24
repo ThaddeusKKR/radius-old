@@ -27,7 +27,7 @@ module.exports = {
             .setArray(queueClone)
             .setAuthorizedUsers([message.author.id])
             .setChannel(message.channel)
-            .setElementsPerPage(10)
+            .setElementsPerPage(8)
             .formatField('# - Song', function(e) {
                 return `**${queueClone.indexOf(e) + 1}**: [${e.title}](${e.url}) - ${e.requestedBy.toString()}`;
             });

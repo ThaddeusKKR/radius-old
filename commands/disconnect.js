@@ -4,7 +4,7 @@ const Keyv = require('keyv')
 module.exports = {
     name: 'disconnect',
     description: 'Disconnects the bot and stops all music.',
-    aliases: ['dc', 'fuckoff', 'leave'],
+    aliases: ['dc', 'fuckoff', 'leave', 'stop'],
     category: 'music',
     modOnly: false,
     ownerOnly: false,

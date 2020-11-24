@@ -6,11 +6,10 @@
 ++ npm install discord-paginationembed
 ++ credits to galnir for the idea
 ++ yes i know i can do this using reaction collector but i'm lazy to do it for every command that needs it
+- removed the 'summon' command due to it not being needed
 
 == Latest Release -- version 5.5 ==
-+ fixed various reported bugs, such as "service unavailable" errors after executing some commands
-+ new music commands; such as queue and now playing
-+ lyrics command
++ new commands: skipto, lyrics
 
 == Planned Changes ==
 + add a stop command
