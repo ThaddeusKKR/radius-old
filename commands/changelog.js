@@ -11,7 +11,7 @@ module.exports = {
     modOnly: false,
     ownerOnly: false,
     async execute(message, args) {
-        const changelog = fs.readFileSync('../changelog.txt')
+        const changelog = fs.readFileSync('./changelog.txt')
         message.channel.send(`Changelog: \`\`\`diff\n${changelog}\n\`\`\``)
     }
 }
