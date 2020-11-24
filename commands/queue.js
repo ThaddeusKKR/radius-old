@@ -34,12 +34,20 @@ module.exports = {
             .setArray(queueClone)
             .setAuthorizedUsers([message.author.id])
             .setChannel(message.channel)
-            .setElementsPerPage(8)
-            .formatField('# - Song', function(e) {
-                return `**${queueClone.indexOf(e) + 1}**: [${e.title}](${e.url}) - ${e.requestedBy.toString()}`;
+            .setElementsPerPage(10)
+            .formatField(`# - Song`, function(e) {
+                let title;
+                if (e.title.length > 64) {
+                    e.title.slice(64, e.title.length)
+                    title = `${e.title}...`
+                } else {
+                    title = e.title
+                }
+                return `**${queueClone.indexOf(e) + 1}**: [${title}](${e.url})`;
             });
 
-        queueEmbed.embed.setColor('PURPLE').setTitle(`Queue for ${message.guild.name}`)
+
+        queueEmbed.embed.setColor('PURPLE').setTitle(`Queue for ${message.guild.name}`).setFooter(`Use ${prefix}info <\i> for more info about a song in queue`)
         queueEmbed.build();
     }
 }
