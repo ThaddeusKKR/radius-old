@@ -2,9 +2,9 @@ const { MessageEmbed } = require('discord.js')
 const Keyv = require('keyv')
 
 module.exports = {
-    name: 'remove',
-    description: 'Removes a song from the queue.',
-    aliases: ['rm', 'rem'],
+    name: 'move',
+    description: 'Moves a song to another position in queue.',
+    aliases: ['mv'],
     category: 'music',
     modOnly: false,
     ownerOnly: false,
@@ -22,38 +22,57 @@ module.exports = {
                 return message.channel.send(embed)
             }
         }
-        if (songNumber < 1 || songNumber >= message.guild.musicData.queue.length) {
+        const oldPos = args[0]
+        const newPos = args[1]
+
+        if (oldPos < 1 || oldPos > message.guild.musicData.queue.length || newPos < 1 || newPos > message.guild.musicData.queue.length || oldPos == newPosition) {
             const errorEmb = new MessageEmbed()
                 .setDescription(`You entered an invalid song number.`)
                 .setColor("RED")
             return message.channel.send(errorEmb)
         }
-        let voiceChannel = message.member.voice.channel
+        let voiceChannel = message.member.voice.channel;
         if (!voiceChannel) {
             const noVoice = new MessageEmbed()
                 .setDescription(`You are not in a voice channel!`)
                 .setColor("RED")
             return message.channel.send(noVoice)
         }
+        let autoDisable = false
         if (typeof message.guild.musicData.songDispatcher == 'undefined' || message.guild.musicData.songDispatcher == null) {
             const noSong = new MessageEmbed()
-                .setDescription(`There is nothing playing.`)
-                .setColor("RED")
-            return message.channel.send(noSong)
-        } else if (voiceChannel.id !== message.guild.me.voice.channel.id) {
-            const diffVc = new MessageEmbed()
                 .setDescription(`You are not in the same voice channel as the bot.`)
                 .setColor("RED")
-            return message.channel.send(diffVc)
+            return message.channel.send(noVoice)
+        } else if (message.guild.musicData.loopSong) {
+            message.guild.musicData.loopSong = false
+            autoDisable = true
         }
 
-        const removedSong = message.guild.musicData.queue[songNumber - 1]
+        const song = message.guild.musicData.queue[oldPos - 1]
 
-        message.guild.musicData.queue.splice(songNumber - 1, 1);
+        arrayMove(message.guild.musicData.queue, oldPos - 1, newPos - 1)
 
         const embed = new MessageEmbed()
-            .setDescription(`Removed song ${songNumber} ([${removedSong.title}](${removedSong.url})) from queue.`)
+            .setDescription(`[${song.title}](${song.url}) has been moved to position ${newPos}.`)
             .setColor("GREEN")
         return message.channel.send(embed)
+
+        function arrayMove (arr, oldIndex, newIndex) {
+            while (oldIndex < 0) {
+                oldIndex += arr.length
+            }
+            while (newIndex < 0) {
+                newIndex += arr.length;
+            }
+            if (newIndex >= arr.length) {
+                var k = newIndex - arr.length + 1;
+                while (k--) {
+                    arr.push(undefined);
+                }
+            }
+            arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
+            return arr;
+        }
     }
 }
