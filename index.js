@@ -18,7 +18,8 @@ Structures.extend('Guild', function(Guild) {
                 loopSong: false,
                 loopQueue: false,
                 volume: 0.4,
-                private: false
+                private: false,
+                maintenance: false
             };
         }
     }
@@ -35,7 +36,6 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`)
     client.commands.set(command.name, command)
 }
-
 const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
 db.on('error', err => {
     console.log(`Connection error (Keyv): ${err}`)
@@ -81,6 +81,15 @@ client.on('message', async message => {
 
     const webhookClient = new WebhookClient(process.env.WHID, process.env.WHTOKEN)
     const webhookClient2 = new WebhookClient(process.env.WH2ID, process.env.WH2TOKEN)
+    const maintenanceState = await db.get('maintenance-mode')
+    const maintenanceReason = await db.get('maintenance-reason')
+
+    if (maintenanceState == true && message.author.id != ownerID) {
+        const embed = new MessageEmbed()
+            .setDescription(`The bot is in maintenance mode. Reason: \`${maintenanceReason}\``)
+            .setColor("RED")
+        return message.channel.send(embed)
+    }
 
     if (command.modOnly == true) {
         if (message.author.id != ownerID || message.member.hasPermission('ADMINISTRATOR') == false) {
