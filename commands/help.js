@@ -17,11 +17,11 @@ module.exports = {
         let cats = findDuplicates(fullCategories) // cats is an array of all command categories, work on this later.
 
         let cmdArr = [];
-        for(let i = 0; i < commands.length; i++) {
-            if (commands[i].hidden == true || commands[i].ownerOnly == true) continue;
-            cmdArr.push(command.name)
-        }
-        const commandList = cmdArr.join('\`, \`')
+        commands.forEach(cmd => {
+            if (cmd.ownerOnly == true) continue;
+            cmdArr.push(cmd.name)
+        })
+        const commandList = commands.map(command => command.name).join('\`, \`')
 
         const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
         db.on('error', err => {
