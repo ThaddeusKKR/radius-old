@@ -86,7 +86,8 @@ client.on('message', async message => {
 
     if (maintenanceState == true && message.author.id != ownerID) {
         const embed = new MessageEmbed()
-            .setDescription(`The bot is in maintenance mode. Reason: \`${maintenanceReason}\``)
+            .setTitle("Unable to execute command")
+            .setDescription(`**The bot is in maintenance mode** | \`${maintenanceReason}\``)
             .setColor("RED")
         return message.channel.send(embed)
     }
@@ -170,7 +171,7 @@ client.on('voiceStateUpdate', async (___, newState) => {
 
 client.once('ready', async () => {
     await client.user.setActivity("raven help", {
-        type: "LISTENING",
+        type: "STREAMING",
         url: "https://twitch.tv/thaddeuskkr"
     }).catch(console.error)
     await client.user.setStatus("ONLINE")

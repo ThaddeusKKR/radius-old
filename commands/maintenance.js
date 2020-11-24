@@ -26,7 +26,7 @@ module.exports = {
         db.set('maintenance-mode', newState)
         db.set('maintenance-reason', reason)
         const embed = new MessageEmbed()
-            .setDescription(`Maintenance mode ${wordState}.`)
+            .setDescription(`Maintenance mode **${wordState}** | ${reason}`)
             .setColor("GREEN")
         return message.channel.send(embed)
     }
