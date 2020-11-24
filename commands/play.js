@@ -40,18 +40,10 @@ module.exports = {
         })
         const serverPrefix = await db.get(message.guild.id) || globalPrefix
         if (!args.length) {
-            if (message.guild.musicData.isPlaying == false) {
-                message.guild.musicData.isPlaying = true
-                const embed = new MessageEmbed()
-                    .setDescription("Resumed the music.")
-                    .setColor("GREEN")
-                return message.channel.send(embed)
-            } else {
-                const embed = new MessageEmbed()
-                    .setDescription("You did not provide any arguments!")
-                    .setColor("RED")
-                return message.channel.send(embed)
-            }
+            const embed = new MessageEmbed()
+                .setDescription(`You did not provide any arguments!`)
+                .setColor("RED")
+            return message.channel.send(embed)
         }
 
         let query = args.join(' ')
