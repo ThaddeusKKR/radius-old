@@ -242,7 +242,7 @@ module.exports = {
                             console.error(e);
                             if (queue.length > 1) {
                                 queue.shift();
-                                classThis.playSong(queue, message);
+                                playSong(queue, message);
                                 return;
                             }
                             message.guild.musicData.queue.length = 0;

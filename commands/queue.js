@@ -38,6 +38,7 @@ module.exports = {
             .setElementsPerPage(8)
             .formatField(`# - Song`, function(e) {
                 let title = e.title.slice(0, 40)
+                title = `${title}...`
                 return `**${queueClone.indexOf(e) + 1}**: [${title}](${e.url}) (${e.requestedBy.toString()})`;
             });
 
