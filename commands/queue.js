@@ -37,9 +37,9 @@ module.exports = {
             .setChannel(message.channel)
             .setElementsPerPage(8)
             .formatField(`# - Song`, function(e) {
-                let title = e.title.slice(0, 32)
+                let title = e.title.slice(0, 56)
                 title = `${title}...`
-                return `**${queueClone.indexOf(e) + 1}**: [${title}](${e.url}) (${e.requestedBy.toString()})`;
+                return `**${queueClone.indexOf(e) + 1}**: [${title}](${e.url}) - ${e.requestedBy.tag}`;
             });
 
 
