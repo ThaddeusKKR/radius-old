@@ -24,6 +24,7 @@ module.exports = {
             reason = args.join(' ') || "Turned off by bot owner."
         }
         db.set('maintenance-mode', newState)
+        db.set('maintenance-reason', reason)
         const embed = new MessageEmbed()
             .setDescription(`Maintenance mode ${wordState}.`)
             .setColor("GREEN")
