@@ -17,8 +17,12 @@ module.exports = {
         let cats = findDuplicates(fullCategories) // cats is an array of all command categories, work on this later.
 
         let cmdArr = [];
+        let numberOfCommands = 0
         commands.forEach(cmd => {
-            if (cmd.ownerOnly == false || !cmd.ownerOnly) cmdArr.push(cmd.name)
+            if (cmd.ownerOnly == false || !cmd.ownerOnly) {
+                cmdArr.push(cmd.name)
+                numberOfCommands++
+            }
         })
         const commandList = cmdArr.join('\`, \`')
 
@@ -38,7 +42,7 @@ module.exports = {
                 .setDescription(`This is a list of all my commands.\nYou can run \`${await db.get(message.guild.id) || globalPrefix}help [command name]\` to get more information on a command.`)
                 .addField("Commands", `\`${commandList}\``)
                 .setColor("PURPLE")
-                .setFooter(`${commands.size} commands | Requested by ${message.author.tag}`)
+                .setFooter(`${numberOfCommands} commands | Requested by ${message.author.tag}`)
                 .setTimestamp()
             message.channel.send(embed)
             return;
