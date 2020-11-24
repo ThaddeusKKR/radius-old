@@ -55,9 +55,9 @@ module.exports = {
                 let b = i - 1;
                 lyricsArray.push(
                     new MessageEmbed()
-                        .setTitle(`Lyrics`)
+                        .setTitle(`Lyrics | ${result.data[0].name} - ${result.data[0].artist}`)
                         .setDescription(lyrics.slice(b * 2048, i * 2048))
-                        .setFooter(`Powered by KSoft.si`)
+                        .setFooter(`Powered by KSoft.si | Page ${i} of ${lyricsIndex - 1}`)
                 )
             }
             const lyricsEmb = new Pagination.Embeds()
@@ -66,8 +66,13 @@ module.exports = {
                 .setChannel(message.channel)
                 .setURL(result.data[0].url)
                 .setColor("PURPLE")
+                .setThumbnail(result.data[0].album_art)
 
-            msg.edit(lyricsEmb.build())
+            const found = new MessageEmbed()
+                .setDescription(`Found lyrics for \`${songName}\`.`)
+                .setColor("GREEN")
+
+            msg.edit(found, lyricsEmb.build()).then(msg => msg.delete({ timeout: 5000 }))
             return
         } catch (err) {
             const errEmbed = new MessageEmbed()
