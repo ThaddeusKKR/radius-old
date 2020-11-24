@@ -69,6 +69,15 @@ module.exports = {
 
             msg.edit(lyricsEmb.build())
             return
+        } catch (err) {
+            const errEmbed = new MessageEmbed()
+                .setTitle(`Error`)
+                .setDescription(`There was an error while attempting to get lyrics for \`${songName}\`.`)
+                .addField(`Detailed information`, `\`\`\`js\n${err}\n\`\`\``)
+                .setColor("RED")
+            message.channel.send(errEmbed)
+            console.log(err)
+            return;
         }
     }
 }
