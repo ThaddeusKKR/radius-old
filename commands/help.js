@@ -38,7 +38,7 @@ module.exports = {
                 .setDescription(`This is a list of all my commands.\nYou can run \`${await db.get(message.guild.id) || globalPrefix}help [command name]\` to get more information on a command.`)
                 .addField("Commands", `\`${commandList}\``)
                 .setColor("PURPLE")
-                .setFooter(`${commands.length} commands | Requested by ${message.author.tag}`)
+                .setFooter(`${commands.count} commands | Requested by ${message.author.tag}`)
                 .setTimestamp()
             message.channel.send(embed)
             return;
