@@ -61,5 +61,6 @@ module.exports = {
                 const j = Math.floor(Math.random() * (i + 1));
                 [queue[i], queue[j]] = [queue[j], queue[i]];
             }
+        }
     }
 }
