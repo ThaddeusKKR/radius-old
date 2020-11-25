@@ -240,11 +240,19 @@ client.on('voiceStateUpdate', async (___, newState) => {
 });
 
 client.once('ready', async () => {
-    await client.user.setActivity("rd!h | radius.tk", {
-        type: "STREAMING",
-        url: "https://twitch.tv/thaddeuskkr"
-    }).catch(console.error)
-    await client.user.setStatus("ONLINE")
+    const maintenanceState = await db.get('maintenance-mode')
+    if (maintenanceState == true) {
+        await client.user.setActivity("maintenance | radius.tk", {
+            type: "PLAYING"
+        })
+        await client.user.setStatus('dnd')
+    } else {
+        await client.user.setActivity("rd!h | radius.tk", {
+            type: "STREAMING",
+            url: "https://twitch.tv/thaddeuskkr"
+        }).catch(console.error)
+        await client.user.setStatus('online')
+    }
     console.log("Ready.")
     const logChannel = client.channels.cache.find(ch => ch.id === "756087509129101332")
     const logChannel2 = client.channels.cache.find(ch => ch.id === "769958858990026762")
