@@ -7,17 +7,7 @@ module.exports = {
     description: 'Shows you information about a user (Mention).',
     aliases: ['ui', 'user'],
     category: 'tools',
-    async execute(message, args) {
-
-        const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
-        db.on('error', err => {
-            console.log(`Connection error (Keyv): ${err}`)
-            const embed = new MessageEmbed()
-                .setDescription(`Failed to connect to the Keyv database.`)
-                .setColor("RED")
-            return message.channel.send(embed)
-        })
-        const prefix = await db.get(message.guild.id) || globalPrefix
+    async execute(message, args, prefix) {
 
         let usr = message.guild.members.cache.get(args[0]) || message.mentions.users.first()
 
