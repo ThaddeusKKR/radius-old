@@ -45,7 +45,7 @@ db.on('error', err => {
 const webhookClient = new WebhookClient(process.env.WHID, process.env.WHTOKEN)
 const webhookClient2 = new WebhookClient(process.env.WH2ID, process.env.WH2TOKEN)
 
-const dbl = new DBL(process.env.DBLTOKEN, client, { webhookPort: 5000, webhookAuth: 'radius' })
+const dbl = new DBL(process.env.DBLTOKEN, { webhookPort: 5000, webhookAuth: 'radius' }, client)
 
 dbl.on(`posted`, () => {
     console.log(`Server count posted | ${client.users.cache.size} users | ${client.guilds.cache.size} servers`)
@@ -69,7 +69,7 @@ dbl.on(`error`, e => {
         embeds: [svErr]
     })
 })
-/*
+
 dbl.webhook.on('ready', hook => {
     console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
     const whRunning = new MessageEmbed()
@@ -101,7 +101,7 @@ dbl.webhook.on('vote', vote => {
         embeds: [logEmb]
     })
 })
- */
+
 
 client.on('message', async message => {
 
