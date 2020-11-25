@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const Keyv = require('keyv')
+const client = require('discord.js')
 
 module.exports = {
     name: 'maintenance',
