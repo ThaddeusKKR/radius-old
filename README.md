@@ -24,3 +24,6 @@ Radius is open source and you can access the GitHub repository [here](https://gi
 - [Documentation](https://docs.radius.tk)
 - [Code](https://github.com/radiusbot/radius)
 - [Owner's Website](https://tkkr.tk)
+
+### Credits
+- [galnir/Master-Bot](https://github.com/galnir/Master-Bot) for some of the music framework
