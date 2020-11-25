@@ -105,19 +105,22 @@ dbl.webhook.on('vote', vote => {
 
 
 client.on('message', async message => {
-
+    if (message.author.bot) return;
+    let args
     let prefix
-    if (message.content.startsWith(globalPrefix && !db.get(message.guild.id))) {
-        prefix = globalPrefix
-    } else {
-        const guildPrefix = await db.get(message.guild.id); // Get prefix for the guild
-        if (message.content.startsWith(guildPrefix)) prefix = guildPrefix
+    const guildPrefix = await db.get(message.guild.id);
+    if (message.guild) {
+        if (message.content.startsWith(globalPrefix && !guildPrefix)) {
+            prefix = globalPrefix;
+        } else if (message.content.startsWith(guildPrefix)) {
+            prefix = guildPrefix
+        }
+        if (!prefix) return;
+        args = message.content.slice(prefix.length).trim().split(/\s+/)
+    } else { // To handle DMs
+        const slice = message.content.startsWith(globalPrefix) ? globalPrefix.length : 0;
+        args = message.content.slice(slice).split(/\s+/);
     }
-    if (!prefix || message.author.bot) {
-        return;
-    }
-
-    const args = message.content.slice(prefix.length).trim().split(/ +/)
     const commandName = args.shift().toLowerCase();
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
