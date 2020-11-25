@@ -4,6 +4,7 @@ const fs = require('fs')
 const { globalPrefix, unknownCmd, ownerID } = require('./config.json')
 const config = require('./config.json')
 const Keyv = require('keyv')
+const DBL = require('dblapi.js')
 
 Structures.extend('Guild', function(Guild) {
     class MusicGuild extends Guild {
@@ -41,24 +42,72 @@ db.on('error', err => {
     console.log(`Connection error (Keyv): ${err}`)
 })
 
-client.on('message', async message => {
+const webhookClient = new WebhookClient(process.env.WHID, process.env.WHTOKEN)
+const webhookClient2 = new WebhookClient(process.env.WH2ID, process.env.WH2TOKEN)
 
-    // Keyv Data Storage ( Using this for prefix and stuff )
-    if (message.content.split(' ').length === 1 && message.mentions.users.has(client.user)) {
-        let prefixForMention = await db.get(message.guild.id)
-        const embed = new MessageEmbed()
-            .setDescription(`My prefix in this server is \`${prefixForMention}\`.`)
-            .setFooter(`Do ${prefixForMention}help for a list of commands.`)
-            .setColor("PURPLE")
-        return message.channel.send(embed)
+const dbl = new DBL(process.env.DBLTOKEN, client, { webhookPort: 5000, webhookAuth: 'radius' })
+
+dbl.on(`posted`, () => {
+    console.log(`Server count posted | ${client.users.cache.size} users | ${client.guilds.cache.size} servers`)
+    const svPosted = new MessageEmbed()
+        .setTitle(`Server count posted`)
+        .setDescription(`${client.users.cache.size} users in ${client.guilds.cache.size} servers`)
+        .setColor("GREEN")
+    webhookClient.send({
+        username: 'Radius | DBL',
+        embeds: [svPosted]
+    })
+})
+dbl.on(`error`, e => {
+    console.log(`Error while posting server count: ${e}`)
+    const svPosted = new MessageEmbed()
+        .setTitle(`Error posting server count`)
+        .setDescription(`${client.users.cache.size} users in ${client.guilds.cache.size} servers\n\`\`\`\n${e}\n\`\`\``)
+        .setColor("RED")
+    webhookClient.send({
+        username: 'Radius | DBL',
+        embeds: [svErr]
+    })
+})
+dbl.webhook.on('ready', hook => {
+    console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
+    const whRunning = new MessageEmbed()
+        .setTitle(`Webhook Ready`)
+        .setDescription(`The webhook is now running at http://${hook.hostname}:${hook.port}${hook.path}.`)
+        .setColor("GREEN")
+    webhookClient.send({
+        username: 'Radius',
+        embeds: [whRunning]
+    })
+});
+dbl.webhook.on('vote', vote => {
+    const dmEmb = new MessageEmbed()
+        .setDescription(`Thank you for voting for Radius!`)
+        .setColor(`PURPLE`)
+    let weekendMultiplier = 'is not active';
+    if (vote.isWeekend == true) {
+        weekendMultiplier = 'is active'
+        dmEmb.addField(`Multipliers`, `The weekend multiplier is active, meaning that your vote counts twice. Thanks!`)
     }
+    console.log(`User with ID ${vote.user} just voted | The weekend multiplier ${weekendMultiplier}`)
+    const voter = client.users.cache.find(u => u.id == vote.user)
+    voter.send(dmEmb)
+    const logEmb = new MessageEmbed()
+        .setDescription(`${voter.toString()} just voted for the bot. The weekend multiplier ${weekendMultiplier}.`)
+        .setColor("YELLOW")
+    webhookClient.send({
+        username: 'Radius Vote Notifications',
+        embeds: [logEmb]
+    })
+})
+
+client.on('message', async message => {
 
     let prefix
     if (message.content.startsWith(globalPrefix && !db.get(message.guild.id))) {
         prefix = globalPrefix
     } else {
         const guildPrefix = await db.get(message.guild.id); // Get prefix for the guild
-        if (!guildPrefix) prefix = globalPrefix
         if (message.content.startsWith(guildPrefix)) prefix = guildPrefix
     }
     if (!prefix || message.author.bot) {
@@ -79,8 +128,6 @@ client.on('message', async message => {
         return;
     }
 
-    const webhookClient = new WebhookClient(process.env.WHID, process.env.WHTOKEN)
-    const webhookClient2 = new WebhookClient(process.env.WH2ID, process.env.WH2TOKEN)
     const maintenanceState = await db.get('maintenance-mode')
     const maintenanceReason = await db.get('maintenance-reason')
 
@@ -112,7 +159,27 @@ client.on('message', async message => {
 
 
     try {
-        command.execute(message, args)
+        command.execute(message, args).catch(err => {
+            console.error(error)
+            const errEmb = new MessageEmbed()
+                .setTitle("Error")
+                .setDescription(`There was an error attempting to execute the command.`)
+                .addField("Command:", `\`${command}\``)
+                .addField("Arguments:", `\`${args}\``)
+                .addField("Details:", `\`\`\`\n${error}\n\`\`\``)
+                .setColor("RED")
+            message.channel.send(errEmb)
+            const errLogEmb = new MessageEmbed()
+                .setDescription(`${message.author.toString()} used command \`${command.name}\` in \`${message.guild.name}\` but faced an error: \`${error}\``)
+            webhookClient.send({
+                username: 'Radius',
+                embeds: [errLogEmb]
+            })
+            webhookClient2.send({
+                username: 'Radius',
+                embeds: [errLogEmb]
+            })
+        })
 
         const embed = new MessageEmbed()
             .setDescription(`${message.author.toString()} used command \`${command.name}\` in \`${message.guild.name}\`.`)
@@ -139,11 +206,11 @@ client.on('message', async message => {
             .setDescription(`${message.author.toString()} used command \`${command.name}\` in \`${message.guild.name}\` but faced an error: \`${error}\``)
         webhookClient.send({
             username: 'Raven',
-            embeds: [errEmb]
+            embeds: [errLogEmb]
         })
         webhookClient2.send({
             username: 'RavenBot Logging',
-            embeds: [errEmb]
+            embeds: [errLogEmb]
         })
     }
 })
@@ -170,7 +237,7 @@ client.on('voiceStateUpdate', async (___, newState) => {
 });
 
 client.once('ready', async () => {
-    await client.user.setActivity("raven help", {
+    await client.user.setActivity("rd!h | radius.tk", {
         type: "STREAMING",
         url: "https://twitch.tv/thaddeuskkr"
     }).catch(console.error)
@@ -181,12 +248,12 @@ client.once('ready', async () => {
     if (!logChannel || !logChannel2) return
     const embed = new MessageEmbed()
         .setTitle("Bot ready")
-        .setDescription("Raven has started.")
+        .setDescription("Radius has started.")
         .addField("Cached users", client.users.cache.size)
         .addField("Cached servers", client.guilds.cache.size)
         .setColor("PURPLE")
     logChannel.send(embed).catch(err => {
-        console.log("Failed to send start embed.")
+        console.log("Failed to send start embed [1]")
     })
     logChannel2.send(embed).catch(err => {
         console.log("Failed to send start embed [2]")

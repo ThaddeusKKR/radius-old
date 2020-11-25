@@ -18,10 +18,19 @@ module.exports = {
             newState = true
             wordState = "enabled"
             reason = args.join(' ') || "No reason provided."
+            await client.user.setStatus(`DND`)
+            await client.user.setActivity(`maintenance | radius.tk`, {
+                type: "PLAYING"
+            })
         } else if (state == true) {
             newState = false
             wordState = "disabled"
             reason = args.join(' ') || "Turned off by bot owner."
+            await client.user.setStatus(`ONLINE`)
+            await client.user.setActivity(`rd!h | radius.tk`, {
+                type: "STREAMING",
+                url: "https://twitch.tv/thaddeuskkr"
+            })
         }
         db.set('maintenance-mode', newState)
         db.set('maintenance-reason', reason)
