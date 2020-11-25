@@ -19,7 +19,7 @@ module.exports = {
         if (message.guild.musicData.queue.length == 0 && message.guild.musicData.nowPlaying) {
             const embed = new MessageEmbed()
                 .setTitle(`Queue for ${message.guild.name}`)
-                .addField(`Now Playing`, `[${message.guild.musicData.nowPlaying.title}](${message.guild.musicData.nowPlaying.url}) - ${mesasge.guild.musicData.nowPlaying.requestedBy.toString()}`)
+                .addField(`Now Playing`, `[${message.guild.musicData.nowPlaying.title}](${message.guild.musicData.nowPlaying.url}) - ${message.guild.musicData.nowPlaying.requestedBy.toString()}`)
                 .addField(`# - Song`, `No songs in queue.`)
                 .setColor("PURPLE")
             return message.channel.send(embed)

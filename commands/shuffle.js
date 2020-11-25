@@ -2,9 +2,9 @@ const { MessageEmbed } = require('discord.js')
 const Keyv = require('keyv')
 
 module.exports = {
-    name: 'volume',
-    description: 'Changes the volume of the player.',
-    aliases: ['vol'],
+    name: 'shuffle',
+    description: 'Shuffles the song queue.',
+    aliases: ['sh'],
     category: 'music',
     modOnly: false,
     ownerOnly: false,
@@ -22,43 +22,44 @@ module.exports = {
                 return message.channel.send(embed)
             }
         }
-        let voiceChannel = message.member.voice.channel
+        const voiceChannel = message.member.voice.channel;
         if (!voiceChannel) {
-            const noVoice = new MessageEmbed()
-                .setDescription(`You are not in a voice channel!`)
+            const erEmb = new MessageEmbed()
+                .setDescription("You are not in a voice channel!")
                 .setColor("RED")
-            return message.channel.send(noVoice)
+            return message.channel.send(erEmb)
         }
         if (typeof message.guild.musicData.songDispatcher == 'undefined' || message.guild.musicData.songDispatcher == null) {
-            const noSong = new MessageEmbed()
-                .setDescription(`There is nothing playing.`)
+            const embed = new MessageEmbed()
+                .setDescription(`There is nothing playing right now!`)
                 .setColor("RED")
-            return message.channel.send(noSong)
+            return message.channel.send(embed)
         } else if (voiceChannel.id !== message.guild.me.voice.channel.id) {
-            const diffVc = new MessageEmbed()
+            const embed = new MessageEmbed()
                 .setDescription(`You are not in the same voice channel as the bot.`)
                 .setColor("RED")
-            return message.channel.send(diffVc)
+            return message.channel.send(embed)
+        } else if (message.guild.musicData.loopSong == true) {
+            message.guild.musicData.loopSong = false
         }
-        if (!args.length) {
+        if (message.guild.musicData.queue.length < 1) {
             const embed = new MessageEmbed()
-                .setDescription(`You did not provide any arguments!`)
+                .setDescription(`There are no songs in queue!`)
                 .setColor("RED")
             return message.channel.send(embed)
         }
-        const wantedVolume = args[0]
-        if (wantedVolume > 150 || wantedVolume < 0) {
-            const embed = new MessageEmbed()
-                .setDescription(`Volume must be from **0%** to **150%**`)
-                .setColor("RED")
-            return message.channel.send(embed)
-        }
-        const volume = wantedVolume / 100
-        message.guild.musicData.volume = volume;
-        message.guild.musicData.songDispatcher.setVolume(volume);
+
+        shuffleQueue(message.guild.musicData.queue);
+
         const embed = new MessageEmbed()
-            .setDescription(`Volume set to **${wantedVolume}%**.`)
+            .setDescription(`Shuffled the queue. Use the \`queue\` command to view the new queue.`)
             .setColor("GREEN")
         return message.channel.send(embed)
+
+        function shuffleQueue(queue) {
+            for (let i = queue.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [queue[i], queue[j]] = [queue[j], queue[i]];
+            }
     }
 }

@@ -18,7 +18,7 @@ module.exports = {
             newState = true
             wordState = "enabled"
             reason = args.join(' ') || "No reason provided."
-            await message.client.user.setStatus(`DND`)
+            await message.client.user.setStatus('dnd')
             await message.client.user.setActivity(`maintenance | radius.tk`, {
                 type: "PLAYING"
             })
@@ -26,7 +26,7 @@ module.exports = {
             newState = false
             wordState = "disabled"
             reason = args.join(' ') || "Turned off by bot owner."
-            await message.client.user.setStatus(`ONLINE`)
+            await message.client.user.setStatus('online')
             await message.client.user.setActivity(`rd!h | radius.tk`, {
                 type: "STREAMING",
                 url: "https://twitch.tv/thaddeuskkr"

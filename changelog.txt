@@ -2,6 +2,9 @@
 - removed the 'summon' command due to it not being needed
 + bunch of new commands added to the release
 + bugfix for command handler
++ a bunch of other bugfixes
++ shuffle command
++ fixed no queue
 
 == Latest Release -- version 6.0 ==
 + improved the design of the queue embed and made it easier for changelog to work

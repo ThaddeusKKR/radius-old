@@ -56,6 +56,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setDescription(`[${song.title}](${song.url}) has been moved to position ${newPos}.`)
             .setColor("GREEN")
+        message.guild.musicData.loopSong = true
         return message.channel.send(embed)
 
         function arrayMove (arr, oldIndex, newIndex) {

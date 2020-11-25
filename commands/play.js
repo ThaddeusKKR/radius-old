@@ -154,7 +154,6 @@ module.exports = {
                 .addField(`Duration`, formatDuration(video.duration), true)
                 .addField(`Requested by`, message.author.toString(), true)
                 .addField(`Position in queue`, message.guild.musicData.queue.length + 1)
-                .setThumbnail(video.thumbnail)
                 .setColor("GREEN")
             message.guild.musicData.queue.push(constructSongObj(video, voiceChannel, message.member.user))
             if (message.guild.musicData.isPlaying == false) {
