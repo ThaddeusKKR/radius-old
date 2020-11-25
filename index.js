@@ -159,8 +159,6 @@ client.on('message', async message => {
         }
     }
 
-
-
     try {
         command.execute(message, args).catch(err => {
             console.error(err)
@@ -168,7 +166,7 @@ client.on('message', async message => {
                 .setTitle("Error")
                 .setDescription(`There was an error attempting to execute the command.`)
                 .addField("Command:", `\`${command.name}\``)
-                .addField("Arguments:", `\`${args || "None"}\``)
+                .addField("Arguments:", `\`${args.join(' ') || "None"}\``)
                 .addField("Details:", `\`\`\`\n${err}\n\`\`\``)
                 .setColor("RED")
             message.channel.send(errEmb)
@@ -202,7 +200,7 @@ client.on('message', async message => {
             .setTitle("Error")
             .setDescription(`There was an error attempting to execute the command.`)
             .addField("Command:", `\`${command.name}\``)
-            .addField("Arguments:", `\`${args || "None"}\``)
+            .addField("Arguments:", `\`${args.join(' ') || "None"}\``)
             .addField("Details:", `\`\`\`\n${error}\n\`\`\``)
             .setColor("RED")
         message.channel.send(errEmb)
