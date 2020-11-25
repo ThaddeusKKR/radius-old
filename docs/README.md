@@ -4,6 +4,9 @@
 
 [![Discord Bots](https://top.gg/api/widget/status/709391431713685580.svg)](https://top.gg/bot/709391431713685580)
 
+### Description:
+Radius is a Discord bot programmed in NodeJS. I use [discord.js](https://discord.js.org) for the bot's framework and Keyv for data storage.
+
 ### Features:
 **Do `rd!h` for a full list of commands.**  
 - Cool polling system
