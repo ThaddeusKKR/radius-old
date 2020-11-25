@@ -167,12 +167,13 @@ client.on('message', async message => {
             const errEmb = new MessageEmbed()
                 .setTitle("Error")
                 .setDescription(`There was an error attempting to execute the command.`)
-                .addField("Command:", `\`${command}\``)
-                .addField("Arguments:", `\`${args}\``)
+                .addField("Command:", `\`${command.name}\``)
+                .addField("Arguments:", `\`${args || "None"}\``)
                 .addField("Details:", `\`\`\`\n${err}\n\`\`\``)
                 .setColor("RED")
             message.channel.send(errEmb)
             const errLogEmb = new MessageEmbed()
+                .setColor("RED")
                 .setDescription(`${message.author.toString()} used command \`${command.name}\` in \`${message.guild.name}\` but faced an error: \`${err}\``)
             webhookClient.send({
                 username: 'Radius',
@@ -200,12 +201,13 @@ client.on('message', async message => {
         const errEmb = new MessageEmbed()
             .setTitle("Error")
             .setDescription(`There was an error attempting to execute the command.`)
-            .addField("Command:", `\`${command}\``)
-            .addField("Arguments:", `\`${args}\``)
+            .addField("Command:", `\`${command.name}\``)
+            .addField("Arguments:", `\`${args || "None"}\``)
             .addField("Details:", `\`\`\`\n${error}\n\`\`\``)
             .setColor("RED")
         message.channel.send(errEmb)
         const errLogEmb = new MessageEmbed()
+            .setColor("RED")
             .setDescription(`${message.author.toString()} used command \`${command.name}\` in \`${message.guild.name}\` but faced an error: \`${error}\``)
         webhookClient.send({
             username: 'Raven',
