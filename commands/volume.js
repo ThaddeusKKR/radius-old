@@ -1,6 +1,5 @@
 const { MessageEmbed } = require('discord.js')
 const Keyv = require('keyv')
-const ownerID = require('../config.json')
 
 module.exports = {
     name: 'volume',
@@ -48,20 +47,22 @@ module.exports = {
             return message.channel.send(embed)
         }
         const wantedVolume = args[0]
-        if (args[1].includes('-o' || '--override')) {
-            if (message.author.id != ownerID) {
+        if (args.length > 1) {
+            if (args[1].includes('-o' || '--override')) {
+                if (message.author.id != process.env.OWNERID) {
+                    const embed = new MessageEmbed()
+                        .setDescription(`You do not have permission to use the \`override\` flag.`)
+                        .setColor("RED")
+                    return message.channel.send(embed)
+                }
+                const vol = wantedVolume / 100
+                message.guild.musicData.volume = volume;
+                message.guild.musicData.songDispatcher.setVolume(volume);
                 const embed = new MessageEmbed()
-                    .setDescription(`You do not have permission to use the \`override\` flag.`)
-                    .setColor("RED")
+                    .setDescription(`**[ OVERRIDE ]** Volume set to **${wantedVolume}%**`)
+                    .setColor("GREEN")
                 return message.channel.send(embed)
             }
-            const vol = wantedVolume / 100
-            message.guild.musicData.volume = volume;
-            message.guild.musicData.songDispatcher.setVolume(volume);
-            const embed = new MessageEmbed()
-                .setDescription(`**[ OVERRIDE ]** Volume set to **${wantedVolume}%**`)
-                .setColor("GREEN")
-            return message.channel.send(embed)
         }
         if (wantedVolume > 100 || wantedVolume < 0) {
             const embed = new MessageEmbed()
