@@ -163,7 +163,7 @@ client.on('message', async message => {
 
     try {
         command.execute(message, args).catch(err => {
-            console.error(error)
+            console.error(err)
             const errEmb = new MessageEmbed()
                 .setTitle("Error")
                 .setDescription(`There was an error attempting to execute the command.`)
