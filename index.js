@@ -69,6 +69,7 @@ dbl.on(`error`, e => {
         embeds: [svErr]
     })
 })
+/*
 dbl.webhook.on('ready', hook => {
     console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
     const whRunning = new MessageEmbed()
@@ -100,6 +101,7 @@ dbl.webhook.on('vote', vote => {
         embeds: [logEmb]
     })
 })
+ */
 
 client.on('message', async message => {
 
