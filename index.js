@@ -110,8 +110,12 @@ client.on('message', async message => {
     let prefix
     const guildPrefix = await db.get(message.guild.id);
     if (message.guild) {
-        if (message.content.startsWith(globalPrefix && !guildPrefix)) {
-            prefix = globalPrefix;
+        if (message.content.startsWith(globalPrefix)) {
+            if (guildPrefix) {
+                prefix = guildPrefix
+            } else {
+                prefix = globalPrefix;
+            }
         } else if (message.content.startsWith(guildPrefix)) {
             prefix = guildPrefix
         }
