@@ -109,6 +109,7 @@ client.on('message', async message => {
     let args
     let prefix
     const guildPrefix = await db.get(message.guild.id);
+    console.log(guildPrefix)
     if (message.guild) {
         if (message.content.startsWith(globalPrefix)) {
             if (guildPrefix) {
