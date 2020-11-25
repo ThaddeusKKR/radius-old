@@ -23,7 +23,7 @@ module.exports = {
             }
         }
         const songNumber = args[0]
-        if (songNumber < 1 || songNumber >= message.guild.musicData.queue.length) {
+        if (songNumber < 1 || songNumber > message.guild.musicData.queue.length) {
             const errorEmb = new MessageEmbed()
                 .setDescription(`You entered an invalid song number.`)
                 .setColor("RED")

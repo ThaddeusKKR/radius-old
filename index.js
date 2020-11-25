@@ -163,7 +163,7 @@ client.on('message', async message => {
     }
 
     try {
-        command.execute(message, args).catch(err => {
+        command.execute(message, args, prefix).catch(err => {
             console.error(err)
             const errEmb = new MessageEmbed()
                 .setTitle("Error")

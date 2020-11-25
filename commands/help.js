@@ -7,7 +7,7 @@ module.exports = {
     description: 'Sends you this help command.',
     aliases: ['h', 'commands'],
     category: 'info',
-    async execute(message, args) {
+    async execute(message, args, prefix) {
 
         const { commands } = message.client;
 
@@ -26,20 +26,10 @@ module.exports = {
         })
         const commandList = cmdArr.join('\`, \`')
 
-        const db = new Keyv(process.env.DATABASE_URL, { namespace: 'prefixes'})
-        db.on('error', err => {
-            console.log(`Connection error (Keyv): ${err}`)
-            const embed = new MessageEmbed()
-                .setDescription(`Failed to connect to the Keyv database.`)
-                .setColor("RED")
-            return message.channel.send(embed)
-        })
-        const prefix = await db.get(message.guild.id) || globalPrefix
-
         if (!args.length) {
             const embed = new MessageEmbed()
                 .setTitle("Help")
-                .setDescription(`This is a list of all my commands.\nYou can run \`${await db.get(message.guild.id) || globalPrefix}help [command name]\` to get more information on a command.`)
+                .setDescription(`This is a list of all my commands.\nYou can run \`${prefix}help [command name]\` to get more information on a command.`)
                 .addField("Commands", `\`${commandList}\``)
                 .setColor("PURPLE")
                 .setFooter(`${numberOfCommands} commands | Requested by ${message.author.tag}`)
@@ -80,7 +70,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setTitle("Command Information")
-            .setDescription(`Specific information on the \`${command.name}\` command.\nTo get a full list of commands, just use \`${await db.get(message.guild.id) || globalPrefix}help\`.`)
+            .setDescription(`Specific information on the \`${command.name}\` command.\nTo get a full list of commands, just use \`${prefix}help\`.`)
             .addField(`Name`, `\`${command.name}\``)
             .addField(`Aliases`, aliases)
             .addField(`Description`, command.description)
