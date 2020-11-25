@@ -236,7 +236,8 @@ module.exports = {
                         })
                         .on('error', function(e) {
                             const errorEmbed = new MessageEmbed()
-                                .setDescription(`Critical Error | Unable to play song - stopped.`)
+                                .setDescription(`Error | Skipped unplayable track.`)
+                                .addField(`Details`, `\`\`\`\n${e}\n\`\`\``)
                                 .setColor("RED")
                             message.channel.send(errorEmbed)
                             console.error(e);
