@@ -13,14 +13,25 @@ module.exports = {
         const guildSettings = await db.get(message.guild.id)
         if (!guildSettings) {
             const embed = new MessageEmbed()
-                .setDescription(`Guild settings currently not available.`)
+                .setDescription(`Guild settings currently not available. Writing new settings.`)
                 .setColor("RED")
+            await db.set(message.guild.id, { unknownCmd: false, welcomeMessage: false })
             return message.channel.send(embed)
         }
         const setting = args[0]
         let value;
         if (args.length < 2) {
-            let currentValue = guildSettings.values(setting)
+            let currentValue
+            if (setting === 'unknownCmd') {
+                currentValue = guildSettings.unknownCmd
+            } else if (setting === 'welcomeMessage') {
+                currentValue = guildSettings.welcomeMessage
+            } else {
+                const embed = new MessageEmbed()
+                    .setDescription(`Invalid setting. Available settings: \`unknownCmd\`, \`welcomeMessage\`.`)
+                    .setColor("RED")
+                return message.channel.send(embed)
+            }
             if (!currentValue) {
                 currentValue = "-"
             }
