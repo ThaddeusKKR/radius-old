@@ -268,7 +268,7 @@ client.once('ready', async () => {
     console.log("Ready.")
     const Guilds = client.guilds.cache.map(guild => guild.name);
     console.log(Guilds)
-    Canvas.registerFont('./resources/welcome/OpenSans-Light.ttf', { family: 'Open Sans Light' });
+    Canvas.registerFont('./resources/OpenSans-Light.ttf', { family: 'Open Sans Light' });
     const logChannel = client.channels.cache.find(ch => ch.id === "756087509129101332")
     const logChannel2 = client.channels.cache.find(ch => ch.id === "769958858990026762")
     if (!logChannel || !logChannel2) return
