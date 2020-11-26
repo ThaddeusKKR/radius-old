@@ -26,7 +26,5 @@ module.exports = {
             value = args[1]
         }
 
-
-        guildSettings.
     }
 }
