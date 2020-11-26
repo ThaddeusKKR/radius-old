@@ -103,14 +103,12 @@ dbl.webhook.on('vote', vote => {
     })
 })
  */
-const guildSettingsDB = new Keyv(process.env.DATABASE_URL, { namespace: 'guild-settings'})
 
 client.on('message', async message => {
     if (message.author.bot) return;
     let args
     let prefix
     const guildPrefix = await db.get(message.guild.id);
-    const guildSettings = await guildSettingsDB.get(message.guild.id)
     if (message.guild) {
         if (message.content.startsWith(globalPrefix)) {
             if (typeof guildPrefix === 'undefined') {
@@ -123,16 +121,16 @@ client.on('message', async message => {
             prefix = guildPrefix
         }
         if (!prefix) return;
-        args = message.content.slice(prefix.length).trim().split(/\s+/)
+        args = message.content.slice(prefix.length).trim().split(/ +/)
     } else { // To handle DMs
         const slice = message.content.startsWith(globalPrefix) ? globalPrefix.length : 0;
-        args = message.content.slice(slice).split(/\s+/);
+        args = message.content.slice(slice).split(/ +/);
     }
     const commandName = args.shift().toLowerCase();
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command) {
-        if (guildSettings.unknownCommand == true) { // Config.json
+        if (unknownCmd == true) { // Config.json
             const noEmb = new MessageEmbed()
                 .setDescription(`Unknown command | Do \`${db.get(message.guild.id) || globalPrefix}help\` for a full list of commands`)
                 .setColor("RED")
@@ -290,8 +288,6 @@ client.on('guildCreate', async guild => {
     const logEmbed = new MessageEmbed()
         .setDescription(`Joined a new guild: \`${guild.name}\``)
         .setColor("PURPLE")
-
-    await guildSettingsDB.set(message.guild.id, { unknownCmd: false, welcomeMessage: false })
 
 })
 
