@@ -28,7 +28,9 @@ Structures.extend('Guild', function(Guild) {
     return MusicGuild;
 });
 
-const client = new Client()
+const client = new Client({
+    fetchAllMembers: true
+})
 client.commands = new Collection()
 
 // Command Handler
