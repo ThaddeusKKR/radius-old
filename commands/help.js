@@ -29,7 +29,7 @@ module.exports = {
         if (!args.length) {
             const embed = new MessageEmbed()
                 .setTitle("Help")
-                .setDescription(`This is a list of all my commands.\nYou can run \`${prefix}help [command name]\` to get more information on a command.`)
+                .setDescription(`This is a list of all my commands.\nYou can run \`${prefix}help [command name]\` to get more information on a command.\nFor further documentation, visit the [docs](https://docs.radius.tk).`)
                 .addField("Commands", `\`${commandList}\``)
                 .setColor("PURPLE")
                 .setFooter(`${numberOfCommands} commands | Requested by ${message.author.tag}`)
@@ -70,7 +70,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setTitle("Command Information")
-            .setDescription(`Specific information on the \`${command.name}\` command.\nTo get a full list of commands, just use \`${prefix}help\`.`)
+            .setDescription(`Specific information on the \`${command.name}\` command.\nTo get a full list of commands, just use \`${prefix}help\`.\nFor further documentation, visit the docs [here](https://docs.radius.tk).`)
             .addField(`Name`, `\`${command.name}\``)
             .addField(`Aliases`, aliases)
             .addField(`Description`, command.description)

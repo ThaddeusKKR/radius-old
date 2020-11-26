@@ -5,6 +5,7 @@ const { globalPrefix, unknownCmd, ownerID } = require('./config.json')
 const config = require('./config.json')
 const Keyv = require('keyv')
 const DBL = require('dblapi.js')
+const Canvas = require('canvas')
 
 Structures.extend('Guild', function(Guild) {
     class MusicGuild extends Guild {
@@ -102,13 +103,14 @@ dbl.webhook.on('vote', vote => {
     })
 })
  */
-
+const guildSettingsDB = new Keyv(process.env.DATABASE_URL, { namespace: 'guild-settings'})
 
 client.on('message', async message => {
     if (message.author.bot) return;
     let args
     let prefix
     const guildPrefix = await db.get(message.guild.id);
+    const guildSettings = await guildSettingsDB.get(message.guild.id)
     if (message.guild) {
         if (message.content.startsWith(globalPrefix)) {
             if (typeof guildPrefix === 'undefined') {
@@ -130,7 +132,7 @@ client.on('message', async message => {
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command) {
-        if (unknownCmd == true) { // Config.json
+        if (guildSettings.unknownCommand == true) { // Config.json
             const noEmb = new MessageEmbed()
                 .setDescription(`Unknown command | Do \`${db.get(message.guild.id) || globalPrefix}help\` for a full list of commands`)
                 .setColor("RED")
@@ -151,11 +153,13 @@ client.on('message', async message => {
     }
 
     if (command.modOnly == true) {
-        if (message.author.id != ownerID || message.member.hasPermission('ADMINISTRATOR') == false) {
-            const embed = new MessageEmbed()
-                .setDescription("You are not allowed to use this command.")
-                .setColor("RED")
-            return message.channel.send(embed)
+        if (message.author.id != ownerID) {
+            if (message.member.hasPermission('ADMINISTRATOR') == false) {
+                const embed = new MessageEmbed()
+                    .setDescription("You are not allowed to use this command.")
+                    .setColor("RED")
+                return message.channel.send(embed)
+            }
         }
     }
     if (command.ownerOnly == true) {
@@ -195,11 +199,11 @@ client.on('message', async message => {
             .setDescription(`${message.author.toString()} used command \`${command.name}\` in \`${message.guild.name}\`.`)
             .setColor("PURPLE")
         webhookClient.send({
-            username: 'Raven',
+            username: 'Radius',
             embeds: [embed]
         })
         webhookClient2.send({
-            username: 'RavenBot Logging',
+            username: 'Radius',
             embeds: [embed]
         })
     } catch (error) {
@@ -216,11 +220,11 @@ client.on('message', async message => {
             .setColor("RED")
             .setDescription(`${message.author.toString()} used command \`${command.name}\` in \`${message.guild.name}\` but faced an error: \`${error}\``)
         webhookClient.send({
-            username: 'Raven',
+            username: 'Radius',
             embeds: [errLogEmb]
         })
         webhookClient2.send({
-            username: 'RavenBot Logging',
+            username: 'Radius',
             embeds: [errLogEmb]
         })
     }
@@ -262,6 +266,9 @@ client.once('ready', async () => {
         await client.user.setStatus('online')
     }
     console.log("Ready.")
+    const Guilds = client.guilds.cache.map(guild => guild.name);
+    console.log(Guilds)
+    Canvas.registerFont('./resources/welcome/OpenSans-Light.ttf', { family: 'Open Sans Light' });
     const logChannel = client.channels.cache.find(ch => ch.id === "756087509129101332")
     const logChannel2 = client.channels.cache.find(ch => ch.id === "769958858990026762")
     if (!logChannel || !logChannel2) return
@@ -278,4 +285,83 @@ client.once('ready', async () => {
         console.log("Failed to send start embed [2]")
     })
 })
+
+client.on('guildCreate', async guild => {
+    const logEmbed = new MessageEmbed()
+        .setDescription(`Joined a new guild: \`${guild.name}\``)
+        .setColor("PURPLE")
+
+    await guildSettingsDB.set(message.guild.id, { unknownCmd: false, welcomeMessage: false })
+
+})
+
+client.on('guildMemberAdd', async member => {
+    const guildSettings = await guildSettingsDB.get(member.guild.id)
+    const welcomeMessage = guildSettings.welcomeMessage
+    if (typeof guildSettings === 'undefined') return;
+    if (welcomeMessage == false) return;
+
+    if (welcomeMessage == true) {
+        const applyText = (canvas, text) => {
+            const ctx = canvas.getContext('2d')
+            let fontSize = 70
+
+            do {
+                ctx.font = `${(fontSize -= 10)}px Open Sans Light`; // needs to match ready event's family name
+            } while (ctx.measureText(text).width > canvas.width - 300);
+
+            return ctx.font
+        }
+        const canvas = Canvas.createCanvas(700, 250);
+        const ctx = canvas.getContext('2d');
+        const background = await Canvas.loadImage('./resources/wallpaper.jpg')
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+        ctx.strokeStyle = '#000000';
+        ctx.strokeRect(0, 0, canvas.width, canvas.height);
+        ctx.font = '26px Open Sans Light'; // same as in do {} while
+        ctx.fillStyle = '#FFFFFF'; // Main Color of the Text on the top of the welcome image
+        ctx.fillText(
+            `Welcome to ${member.guild.name}`,
+            canvas.width / 2.5,
+            canvas.height / 3.5
+        );
+        ctx.strokeStyle = `#FFFFFF`; // Secondary Color of Text on the top of welcome for depth/shadow the stroke is under the main color
+        ctx.strokeText(
+            `Welcome to ${member.guild.name}`,
+            canvas.width / 2.5,
+            canvas.height / 3.5
+        );
+
+        ctx.font = applyText(canvas, `${member.displayName}!`);
+        ctx.fillStyle = '#FFFFFF'; // Main Color for the members name for the welcome image
+        ctx.fillText(
+            `${member.displayName}!`,
+            canvas.width / 2.5,
+            canvas.height / 1.8
+        );
+        ctx.strokeStyle = `#FF0000`; // Secondary Color for the member name to add depth/shadow to the text
+        ctx.strokeText(
+            `${member.displayName}!`,
+            canvas.width / 2.5,
+            canvas.height / 1.8
+        );
+
+        ctx.beginPath();
+        ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
+
+        const avatar = await Canvas.loadImage(
+            member.user.displayAvatarURL({ format: 'jpg' })
+        );
+        ctx.drawImage(avatar, 25, 25, 200, 200);
+
+        const attachment = new MessageAttachment(
+            canvas.toBuffer(),
+            'welcome-image.png'
+        );
+
+    }
+})
+
 client.login(process.env.TOKEN)
